@@ -37,17 +37,34 @@ import { useTeamStore } from '@/store/team'
 import { useCourtStore } from '@/store/court'
 import TeamAdvanceSetting from '@/components/page/ramdomTeam/AdvanceSetting.vue'
 import router from '@/router'
-import { storeToRefs } from 'pinia'
+
 const wordAdvanceSetting = computed(() =>
     showAdvanceSetting.value ? 'ปิด' : 'เปิด'
 )
 const showAdvanceSetting = ref(false)
 const { setTeamLimit, addTeamMember, resetTeam } = useTeamStore()
 const { setCourtNumber, setWinScore, setWinStreak } = useCourtStore()
-const courtNumber = ref(1)
-const winStreak = ref(2)
-const teamLimit = ref(2)
-const winScore = ref(15)
+
+const courtNumber = ref(
+    isNaN(parseInt(localStorage.getItem('courtNumber')!))
+        ? 1
+        : parseInt(localStorage.getItem('courtNumber')!)
+)
+const winStreak = ref(
+    isNaN(parseInt(localStorage.getItem('winStreak')!))
+        ? 2
+        : parseInt(localStorage.getItem('winStreak')!)
+)
+const teamLimit = ref(
+    isNaN(parseInt(localStorage.getItem('teamLimit')!))
+        ? 2
+        : parseInt(localStorage.getItem('teamLimit')!)
+)
+const winScore = ref(
+    isNaN(parseInt(localStorage.getItem('winScore')!))
+        ? 15
+        : parseInt(localStorage.getItem('winScore')!)
+)
 
 const textTeam = ref(localStorage.getItem('textTeam') ?? '')
 const member = ref<string[]>([])
@@ -69,6 +86,10 @@ function randomTeam() {
         return
     }
     localStorage.setItem('textTeam', textTeam.value)
+    localStorage.setItem('courtNumber', courtNumber.value.toString())
+    localStorage.setItem('winScore', winScore.value.toString())
+    localStorage.setItem('winStreak', winStreak.value.toString())
+    localStorage.setItem('teamLimit', teamLimit.value.toString())
     setCourtNumber(courtNumber.value)
     resetTeam()
     setTeamLimit(teamLimit.value)
