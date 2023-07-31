@@ -43,9 +43,13 @@
                 class="d-flex align-center justify-space-between"
                 v-if="openCard"
             >
-                <span class="justify-center">{{ props.teamA.name }}</span>
-                <span></span>
-                <span> {{ props.teamB.name }} </span>
+                <span class="d-flex justify-center" style="width: 33.33%">{{
+                    props.teamA.name
+                }}</span>
+                <span style="width: 33.33%"></span>
+                <span class="d-flex justify-center" style="width: 33.33%">
+                    {{ props.teamB.name }}
+                </span>
             </div>
         </template>
         <v-card-actions v-if="openCard">
