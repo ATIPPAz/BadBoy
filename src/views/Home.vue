@@ -266,8 +266,7 @@ function randomTeam() {
         addTeamMember(player)
     })
     console.log('bug!')
-
-    // router.push({ name: 'TeamView' })
+    router.push({ name: 'TeamView' })
 }
 </script>
 <style scoped lang="scss">
