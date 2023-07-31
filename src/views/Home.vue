@@ -190,7 +190,7 @@ function randomTeam() {
     resetTeam()
     setTeamLimit(teamLimit.value)
     setWinScore(winScore.value)
-    // setWinStreak(winStreak.value)
+    setWinStreak(winStreak.value)
     // member.value = shufferMember(member.value)
     // member.value.forEach((player) => {
     //     addTeamMember(player)
