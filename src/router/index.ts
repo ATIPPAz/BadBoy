@@ -10,7 +10,7 @@ const routes = [
     children: [
       {
         path: '',
-        name: 'Home',
+        name: 'HomePage',
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -18,7 +18,7 @@ const routes = [
       },
       {
         path: 'teamView',
-        name: 'TeamView',
+        name: 'TeamListPage',
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -26,7 +26,7 @@ const routes = [
       },
       {
         path: 'counterVuew',
-        name: 'CounterVuew',
+        name: 'CounterPage',
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -43,7 +43,7 @@ const router = createRouter({
 router.onError((error, to) => {
   if (error.message.includes('Failed to fetch dynamically imported module') || error.message.includes("Importing a module script failed")) {
     console.log(error);
-    router.push({ name: 'Home' })
+    router.push({ name: 'HomePage' })
   }
 })
 

@@ -58,7 +58,7 @@
         <v-card-actions v-if="openCard">
             <v-spacer></v-spacer>
             <v-btn
-                @click="$router.push({ name: 'CounterVuew' })"
+                @click="$router.push({ name: 'CounterPage' })"
                 class="w-100 bg-primary"
                 >Go</v-btn
             >

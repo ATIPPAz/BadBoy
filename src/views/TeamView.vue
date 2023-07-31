@@ -4,7 +4,7 @@
             ทีมปัจจุบัน
         </div>
         {{ getTeamQueue(1) }} ss
-        <!-- <div>
+        <div>
             <CardVersus
                 v-for="(team, index) in court"
                 class="mb-4"
@@ -31,7 +31,7 @@
                     </div>
                 </template>
             </CardVersus>
-        </div> -->
+        </div>
         <div v-if="teamRemain.length > 0">
             <div class="mb-2" style="font-size: 20px; font-weight: bold">
                 ทีมต่อไป

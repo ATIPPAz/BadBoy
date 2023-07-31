@@ -10,7 +10,7 @@
                 Back
             </v-btn>
 
-            <v-btn @click="$router.push({ name: 'Home' })">
+            <v-btn @click="$router.push({ name: 'HomePage' })">
                 <v-icon>mdi-home</v-icon>
                 Home
             </v-btn>
