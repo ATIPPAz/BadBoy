@@ -188,7 +188,7 @@ function randomTeam() {
     localStorage.setItem('teamLimit', teamLimit.value.toString())
     setCourtNumber(courtNumber.value)
     resetTeam()
-    // setTeamLimit(teamLimit.value)
+    setTeamLimit(teamLimit.value)
     // setWinScore(winScore.value)
     // setWinStreak(winStreak.value)
     // member.value = shufferMember(member.value)
