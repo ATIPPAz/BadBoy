@@ -264,7 +264,7 @@ function randomTeam() {
     member.value.forEach((player) => {
         addTeamMember(player)
     })
-    // router.push({ name: 'TeamView' })
+    router.push({ name: 'TeamView' })
 }
 </script>
 <style scoped lang="scss">
