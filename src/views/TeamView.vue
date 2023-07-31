@@ -1,5 +1,5 @@
 <template>
-    <div class="h-100">
+    <!-- <div class="h-100">
         <div class="mb-2" style="font-size: 20px; font-weight: bold">
             ทีมปัจจุบัน
         </div>
@@ -51,7 +51,8 @@
                 </v-card>
             </div>
         </div>
-    </div>
+    </div> -->
+    s
 </template>
 
 <script setup lang="ts">
