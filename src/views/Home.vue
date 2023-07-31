@@ -21,6 +21,17 @@
                 {{ member }}
                 0 player <br />
                 0 court
+                <v-textarea v-model="textTwoDay"> </v-textarea>
+                <v-btn @click="tryToSplitDay">สร้างรายชื่อตามวัน</v-btn>
+                <br />
+                <br />
+                <v-btn @click="satCopy" v-if="openCopyDay">
+                    copy รายชื่อวันเสาร์
+                </v-btn>
+                <v-btn @click="sunCopy" v-if="openCopyDay">
+                    copy รายชื่อวันอาทิตย์
+                </v-btn>
+
                 <!-- <div
                     style="
                         position: absolute;
@@ -174,7 +185,7 @@
     </v-dialog>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useTeamStore } from '@/store/team'
 
 import { useCourtStore } from '@/store/court'
@@ -189,7 +200,7 @@ function swipe(direction: string) {
 const showAdvanceSetting = ref(false)
 const { setTeamLimit, addTeamMember, resetTeam } = useTeamStore()
 const { setCourtNumber, setWinScore, setWinStreak } = useCourtStore()
-
+const textTwoDay = ref('')
 const courtNumber = ref(
     isNaN(parseInt(localStorage.getItem('courtNumber') ?? ''))
         ? 1
@@ -210,9 +221,72 @@ const winScore = ref(
         ? 15
         : parseInt(localStorage.getItem('winScore')!)
 )
-
+const openCopyDay = ref(false)
 const textTeam = ref(localStorage.getItem('textTeam') ?? '')
 const member = ref<string[]>([])
+const saturdayMember = ref('')
+const sundayMember = ref('')
+watch(
+    () => textTwoDay.value,
+    (newValue) => {
+        openCopyDay.value = false
+    }
+)
+function tryToSplitDay() {
+    try {
+        const text = textTwoDay.value.trim().split(/(?=1.)/)
+        const day: string[] = []
+        text.forEach((e, index) => {
+            if (e.includes(`${1}.`)) {
+                day.push(e)
+            }
+        })
+        console.log(day)
+
+        const sat = day[0].split('\n')
+        const sun = day[1].split('\n')
+        console.log(sat)
+
+        let satFinish = false
+        let index = 0
+        while (!satFinish) {
+            if (sat[index].includes(`${index + 1}.`)) {
+                const strSplit = index + 1 + '.'
+                saturdayMember.value +=
+                    sat[index].trim().split(strSplit)[1] + '\n'
+            } else {
+                satFinish = true
+            }
+            index++
+        }
+        index = 0
+
+        let sunFinish = false
+        while (!sunFinish) {
+            console.log(sun[index])
+
+            if (sun[index] && sun[index].includes(`${index + 1}.`)) {
+                const strSplit = index + 1 + '.'
+                sundayMember.value +=
+                    sun[index].trim().split(strSplit)[1] + '\n'
+            } else {
+                sunFinish = true
+            }
+            index++
+        }
+        openCopyDay.value = true
+    } catch (e) {
+        console.log(e)
+
+        alert('ไม่ถูกรูปแบบ')
+    }
+}
+function satCopy() {
+    navigator.clipboard.writeText(saturdayMember.value)
+}
+function sunCopy() {
+    navigator.clipboard.writeText(sundayMember.value)
+}
 function generateMember() {
     return textTeam.value.split('\n').length > 0
         ? textTeam.value.trim().split('\n')
