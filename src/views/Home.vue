@@ -9,6 +9,13 @@
             down: () => swipe('Down'),
         }"
     >
+        <v-btn
+            style="position: fixed; bottom: 80px; right: 16px; z-index: 300"
+            v-if="!isActive && !$vuetify.display.mobile"
+            @click="isActive = true"
+        >
+            สร้างทีม
+        </v-btn>
         <div class="content h-100" style="position: relative">
             <div>
                 {{ member }}
@@ -162,13 +169,6 @@
             </v-card-actions>
         </v-card>
     </v-dialog>
-    <v-btn
-        style="position: fixed; bottom: 80px; right: 16px"
-        v-if="!isActive && !$vuetify.display.mobile"
-        @click="isActive = true"
-    >
-        สร้างทีม
-    </v-btn>
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
