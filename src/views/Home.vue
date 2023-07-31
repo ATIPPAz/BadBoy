@@ -11,6 +11,7 @@
     >
         <div class="content h-100" style="position: relative">
             <div>
+                {{ member }}
                 0 player <br />
                 0 court
                 <!-- <div
