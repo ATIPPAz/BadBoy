@@ -66,6 +66,8 @@ const { getTeamQueue, getRemainQueue } = useTeamStore()
 const { court } = storeToRefs(useCourtStore())
 const teamRemain = computed(() => getRemainQueue())
 onMounted(() => {
+    console.log('team view success')
+
     if (!court.value) router.push({ name: 'Home' })
 })
 </script>
