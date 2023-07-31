@@ -2,7 +2,7 @@
     <v-card>
         <template v-slot:title>
             <div class="d-flex align-center">
-                <span> Court {{ props.courtNumber }} </span>
+                <span> คอร์ท {{ props.courtNumber }} </span>
                 <v-spacer></v-spacer>
                 <div v-if="!openCard" class="d-flex my-2">
                     <div class="d-flex justify-center">
