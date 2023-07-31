@@ -233,6 +233,8 @@ watch(
     }
 )
 function tryToSplitDay() {
+    saturdayMember.value = ''
+    sundayMember.value = ''
     try {
         const text = textTwoDay.value.trim().split(/(?=1.)/)
         const day: string[] = []
@@ -241,7 +243,7 @@ function tryToSplitDay() {
                 day.push(e)
             }
         })
-        console.log(day)
+        console.log(day + '\n---')
 
         const sat = day[0].split('\n')
         const sun = day[1].split('\n')
@@ -251,6 +253,8 @@ function tryToSplitDay() {
         let index = 0
         while (!satFinish) {
             if (sat[index].includes(`${index + 1}.`)) {
+                console.log(sat[index])
+
                 const strSplit = index + 1 + '.'
                 saturdayMember.value +=
                     sat[index].trim().split(strSplit)[1] + '\n'
@@ -260,11 +264,10 @@ function tryToSplitDay() {
             index++
         }
         index = 0
+        console.log(saturdayMember.value)
 
         let sunFinish = false
         while (!sunFinish) {
-            console.log(sun[index])
-
             if (sun[index] && sun[index].includes(`${index + 1}.`)) {
                 const strSplit = index + 1 + '.'
                 sundayMember.value +=
@@ -274,6 +277,8 @@ function tryToSplitDay() {
             }
             index++
         }
+        console.log(sundayMember.value)
+
         openCopyDay.value = true
     } catch (e) {
         console.log(e)
