@@ -49,7 +49,7 @@
                     "
                 >
                     <template v-slot:text>
-                        team{{ team.order }} : {{ team.member.join(' , ') }}
+                        team {{ team.order }} : {{ team.member.join(' , ') }}
                     </template>
                 </v-card>
             </div>
@@ -67,11 +67,6 @@ import router from '@/router'
 const teamStore = useTeamStore()
 const { court } = storeToRefs(useCourtStore())
 const teamRemain = computed(() => teamStore.getRemainQueue())
-function getTeam(num: number) {
-    console.log(1)
-    return teamStore.getTeamQueue(num)
-    // return getTeamQueue(num)
-}
 const teams = ref<any>([])
 court.value?.forEach((e, index) => {
     const merge = []
