@@ -10,6 +10,7 @@
         style="position: relative"
     >
         <div class="content">
+            {{ member }}
             0 court <br />
             0 player
         </div>
@@ -173,6 +174,7 @@ function resetTextTeam() {
     textTeam.value = ''
 }
 function randomTeam() {
+    isActive.value = false
     member.value = generateMember()
     const splitTeam = Math.ceil(member.value.length / teamLimit.value)
     if (member.value.length <= 0 || splitTeam < courtNumber.value * 2) {
@@ -184,16 +186,16 @@ function randomTeam() {
     localStorage.setItem('winScore', winScore.value.toString())
     localStorage.setItem('winStreak', winStreak.value.toString())
     localStorage.setItem('teamLimit', teamLimit.value.toString())
-    setCourtNumber(courtNumber.value)
-    resetTeam()
-    setTeamLimit(teamLimit.value)
-    setWinScore(winScore.value)
-    setWinStreak(winStreak.value)
-    member.value = shufferMember(member.value)
-    member.value.forEach((player) => {
-        addTeamMember(player)
-    })
-    router.push({ name: 'TeamView' })
+    // setCourtNumber(courtNumber.value)
+    // resetTeam()
+    // setTeamLimit(teamLimit.value)
+    // setWinScore(winScore.value)
+    // setWinStreak(winStreak.value)
+    // member.value = shufferMember(member.value)
+    // member.value.forEach((player) => {
+    //     addTeamMember(player)
+    // })
+    // router.push({ name: 'TeamView' })
 }
 </script>
 <style scoped lang="scss">
