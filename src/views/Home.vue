@@ -43,6 +43,7 @@
                 <v-row no-gutters class="h-100">
                     <v-col align-self="start" cols="12">
                         <span> List of team members</span>
+
                         <textarea v-model="textTeam"></textarea>
                         <div class="d-flex justify-end mb-4">
                             <div
