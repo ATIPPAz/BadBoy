@@ -1,18 +1,54 @@
 <template>
     <div
         class="h-100"
+        style="position: relative"
         v-touch="{
             left: () => swipe('Left'),
             right: () => swipe('Right'),
             up: () => swipe('Up'),
             down: () => swipe('Down'),
         }"
-        style="position: relative"
     >
-        <div class="content">
-            0 court <br />
-            0 player
+        <div class="content h-100" style="position: relative">
+            <div>
+                0 player <br />
+                0 court
+                <!-- <div
+                    style="
+                        position: absolute;
+                        bottom: 0px;
+                        height: 20px;
+                        background-color: rgb(223, 219, 255);
+                        width: 100%;
+                        border-radius: 10px 10px 0px 0px;
+                    "
+                    class="d-flex justify-center"
+                >
+                    <div>
+                        <div class="d-flex justify-center">
+                            <div>
+                                <v-divider
+                                    :thickness="3"
+                                    class="border-opacity-100"
+                                    color="primary"
+                                    style="margin-bottom: 2px; width: 20px"
+                                ></v-divider>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-center">
+                            <v-divider
+                                :thickness="3"
+                                class="border-opacity-100"
+                                color="primary"
+                                style="margin-bottom: 2px; width: 40px"
+                            ></v-divider>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
         </div>
+
         <div class="d-flex justify-center align-center h-100 background">
             <div>
                 <div class="d-flex justify-center align-center">
@@ -38,14 +74,34 @@
                         mdi-close
                     </v-icon>
                 </div>
+                <div class="d-flex justify-center">
+                    <div>
+                        <v-divider
+                            :thickness="5"
+                            class="border-opacity-100 mt-4"
+                            color="primary"
+                            style="width: 150px; border-radius: 30px"
+                        ></v-divider>
+                    </div>
+                </div>
             </template>
             <v-container class="h-100 pa-6 ma-0">
                 <v-row no-gutters class="h-100">
                     <v-col align-self="start" cols="12">
-                        <span> List of team members</span>
+                        <div style="color: #838383; margin-bottom: 12px">
+                            List of team members
+                        </div>
 
                         <textarea v-model="textTeam"></textarea>
-                        <div class="d-flex justify-end my-2">
+                        <div class="d-flex justify-space-between my-2">
+                            <div
+                                style="font-size: 12px; color: #838383"
+                                class="d-flex align-center"
+                            >
+                                <div v-if="!showAdvanceSetting">
+                                    สามารถตั้งค่าเพิ่มเติมได้ที่ปุ่มข้างๆ
+                                </div>
+                            </div>
                             <div
                                 @click="
                                     showAdvanceSetting = !showAdvanceSetting
@@ -155,7 +211,7 @@ const textTeam = ref(localStorage.getItem('textTeam') ?? '')
 const member = ref<string[]>([])
 function generateMember() {
     return textTeam.value.split('\n').length > 0
-        ? textTeam.value.split('\n')
+        ? textTeam.value.trim().split('\n')
         : []
 }
 function shufferMember(member: string[]) {
@@ -178,17 +234,22 @@ function resetTextTeam() {
     teamLimit.value = 2
 }
 function randomTeam() {
-    isActive.value = false
+    if (textTeam.value.trim() === '') {
+        alert('ใส่ชื่อผู้เล่นด้วย')
+        return
+    }
     member.value = generateMember()
     const splitTeam = Math.ceil(member.value.length / teamLimit.value!)
-    if (member.value.length <= 0 || textTeam.value.trim() === '') {
-        alert('ใส่ชื่อผู้เล่นด้วยยย')
-        return
-    }
     if (splitTeam < courtNumber.value! * 2) {
-        alert('ใส่จำนวนคนไม่พอ')
+        alert(
+            `ใส่จำนวนคนไม่พอ ขั้นต่ำ ${
+                courtNumber.value * 2 * teamLimit.value
+            } คน`
+        )
         return
     }
+    showAdvanceSetting.value = false
+    isActive.value = false
     localStorage.setItem('textTeam', textTeam.value)
     localStorage.setItem('courtNumber', courtNumber.value.toString())
     localStorage.setItem('winScore', winScore.value.toString())
@@ -230,6 +291,14 @@ textarea:focus {
     width: 100%;
     height: 100%;
     z-index: 0;
+}
+.swipe {
+    position: fixed;
+    z-index: 120;
+    top: 20px;
+    left: 20px;
+    width: 100%;
+    height: 100%;
 }
 .content {
     position: relative;

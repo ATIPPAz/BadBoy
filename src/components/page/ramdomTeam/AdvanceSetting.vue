@@ -24,7 +24,7 @@
             </div>
 
             <br /> -->
-            <span class="ml-10">จำนวนคนในทืม</span>
+            <span class="ml-10">จำนวนคนในทีม</span>
             <v-text-field
                 density="compact"
                 :rules="rules"
