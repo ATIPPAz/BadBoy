@@ -3,7 +3,6 @@
         <div class="mb-2" style="font-size: 20px; font-weight: bold">
             ทีมปัจจุบัน
         </div>
-        {{ getTeamQueue(1) }} ss
         <div>
             <CardVersus
                 v-for="(team, index) in court"
