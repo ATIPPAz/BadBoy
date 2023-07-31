@@ -123,6 +123,7 @@
                             () => {
                                 if (winScoreIndex >= listScoreGame.length - 1)
                                     return
+                                hasChange = true
                                 winScoreIndex += 1
                                 emits('update:winScore', winScore)
                             }
@@ -139,6 +140,7 @@
                             () => {
                                 if (winScoreIndex < 1) return
                                 winScoreIndex -= 1
+                                hasChange = true
                                 emits('update:winScore', winScore)
                             }
                         "
@@ -152,9 +154,16 @@
 </template>
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+
 const listScoreGame = [11, 15, 21]
 const winScoreIndex = ref(1)
-const winScore = computed(() => listScoreGame[winScoreIndex.value])
+const hasChange = ref(false)
+const winScore = computed(() => {
+    return !hasChange.value &&
+        !isNaN(parseInt(localStorage.getItem('winScore') ?? ''))
+        ? parseInt(localStorage.getItem('winScore')!)
+        : listScoreGame[winScoreIndex.value]
+})
 const rules = [
     (value: number) => !!value || 'Required.',
     (value: number) => value > 0 || 'not zero',

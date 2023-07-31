@@ -1,13 +1,35 @@
 <template>
     <v-card>
         <template v-slot:title>
-            Court {{ props.courtNumber }}
+            <div class="d-flex align-center">
+                <span> Court {{ props.courtNumber }} </span>
+                <v-spacer></v-spacer>
+                <div v-if="!openCard" class="d-flex my-2">
+                    <div class="d-flex justify-center">
+                        <span class="blue-team mr-6">
+                            {{ props.teamA.score }}
+                        </span>
+                        <span style="font-size: 20px"> VS </span>
+                        <span class="red-team ml-6">
+                            {{ props.teamB.score }}</span
+                        >
+                    </div>
+                </div>
+                <v-spacer></v-spacer>
+                <v-icon
+                    @click="openCard = !openCard"
+                    :style="{ transform: openCard ? '' : 'scaleY(-1)' }"
+                >
+                    mdi-chevron-up
+                </v-icon>
+            </div>
             <v-divider
+                v-if="openCard"
                 :thickness="1"
                 class="mb-4 mt-2 border-opacity-100"
             ></v-divider>
         </template>
-        <template v-slot:text>
+        <template v-slot:text v-if="openCard">
             <div class="text-versus d-flex align-center justify-space-around">
                 <span class="blue-team">
                     {{ props.teamA.score }}
@@ -17,13 +39,16 @@
             </div>
         </template>
         <template v-slot:subtitle>
-            <div class="d-flex align-center justify-space-between">
+            <div
+                class="d-flex align-center justify-space-between"
+                v-if="openCard"
+            >
                 <span class="justify-center">{{ props.teamA.name }}</span>
                 <span></span>
                 <span> {{ props.teamB.name }} </span>
             </div>
         </template>
-        <v-card-actions>
+        <v-card-actions v-if="openCard">
             <v-spacer></v-spacer>
             <v-btn>Go</v-btn>
         </v-card-actions>
@@ -34,7 +59,9 @@ interface Team {
     score: number
     name: string
 }
+import { ref } from 'vue'
 const props = defineProps<{ courtNumber: number; teamA: Team; teamB: Team }>()
+const openCard = ref(true)
 </script>
 <style scoped lang="scss">
 .text-versus {

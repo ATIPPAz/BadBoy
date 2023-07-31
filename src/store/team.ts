@@ -8,10 +8,16 @@ export const useTeamStore = defineStore("teamStore", () => {
   const teamState = ref<TeamMember[]>([{ member: [], order: 1 }]);
   const teamLimit = ref()
   const teamMember = computed(() => teamState.value)
+  const nextTeam = ref(0)
 
   function getTeamQueue(number: number) {
     if (number < 1) return
+    nextTeam.value = number
     return teamState.value[number - 1]
+  }
+
+  function getRemainQueue() {
+    return teamState.value.slice(nextTeam.value) ?? []
   }
 
   function setTeamLimit(number: number) {
@@ -37,6 +43,7 @@ export const useTeamStore = defineStore("teamStore", () => {
     setTeamLimit,
     addTeamMember,
     resetTeam,
+    getRemainQueue,
     getTeamQueue
   };
 });

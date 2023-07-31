@@ -6,7 +6,9 @@
                     label="กรอกรายชื่อทีม"
                     v-model="textTeam"
                 ></v-textarea>
-                <div class="d-flex justify-end mb-4">
+
+                <div class="d-flex justify-space-between mb-4">
+                    <v-btn @click="resetTextTeam"> reset </v-btn>
                     <v-btn @click="showAdvanceSetting = !showAdvanceSetting">
                         {{ wordAdvanceSetting }} การตั้งค่าเพิ่มเติม
                     </v-btn>
@@ -46,22 +48,22 @@ const { setTeamLimit, addTeamMember, resetTeam } = useTeamStore()
 const { setCourtNumber, setWinScore, setWinStreak } = useCourtStore()
 
 const courtNumber = ref(
-    isNaN(parseInt(localStorage.getItem('courtNumber')!))
+    isNaN(parseInt(localStorage.getItem('courtNumber') ?? ''))
         ? 1
         : parseInt(localStorage.getItem('courtNumber')!)
 )
 const winStreak = ref(
-    isNaN(parseInt(localStorage.getItem('winStreak')!))
+    isNaN(parseInt(localStorage.getItem('winStreak') ?? ''))
         ? 2
         : parseInt(localStorage.getItem('winStreak')!)
 )
 const teamLimit = ref(
-    isNaN(parseInt(localStorage.getItem('teamLimit')!))
+    isNaN(parseInt(localStorage.getItem('teamLimit') ?? ''))
         ? 2
         : parseInt(localStorage.getItem('teamLimit')!)
 )
 const winScore = ref(
-    isNaN(parseInt(localStorage.getItem('winScore')!))
+    isNaN(parseInt(localStorage.getItem('winScore') ?? ''))
         ? 15
         : parseInt(localStorage.getItem('winScore')!)
 )
@@ -80,9 +82,15 @@ function shufferMember(member: string[]) {
     }
     return member
 }
+function resetTextTeam() {
+    localStorage.removeItem('textTeam')
+    textTeam.value = ''
+}
 function randomTeam() {
     member.value = generateMember()
-    if (member.value.length <= 0) {
+    const splitTeam = Math.ceil(member.value.length / teamLimit.value)
+    if (member.value.length <= 0 || splitTeam < courtNumber.value * 2) {
+        alert('ใส่จำนวนคนไม่พอ')
         return
     }
     localStorage.setItem('textTeam', textTeam.value)
