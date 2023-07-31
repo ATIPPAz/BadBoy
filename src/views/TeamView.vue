@@ -13,21 +13,21 @@
             >
                 <template #teamA>
                     team {{ getTeamQueue(index * 2 + 1)?.order }}
-                    <div
+                    <!-- <div
                         v-for="member in getTeamQueue(index * 2 + 1)?.member"
                         class="trunt-word"
                     >
                         {{ member }}
-                    </div>
+                    </div> -->
                 </template>
                 <template #teamB>
                     team {{ getTeamQueue((index + 1) * 2)?.order }}
-                    <div
+                    <!-- <div
                         v-for="member in getTeamQueue((index + 1) * 2)?.member"
                         class="trunt-word"
                     >
                         {{ member }}
-                    </div>
+                    </div> -->
                 </template>
             </CardVersus>
         </div>
@@ -67,7 +67,7 @@ const teamRemain = computed(() => getRemainQueue())
 onMounted(() => {
     console.log('team view success')
 
-    if (!court.value) router.push({ name: 'Home' })
+    if (!court.value) router.push({ name: 'HomePage' })
 })
 </script>
 <style scoped lang="scss">
