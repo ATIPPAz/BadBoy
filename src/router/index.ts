@@ -14,7 +14,7 @@ const routes = [
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
+        component: () => import('@/views/Home.vue'),
       },
       {
         path: 'teamView',
@@ -22,7 +22,7 @@ const routes = [
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => defineComponent(import('@/views/TeamView.vue')),
+        component: () => import('@/views/TeamView.vue'),
       },
       {
         path: 'counterVuew',
@@ -30,7 +30,7 @@ const routes = [
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "home" */ '@/views/CounterVuew.vue'),
+        component: () => import('@/views/CounterVuew.vue'),
       },
     ],
   },
