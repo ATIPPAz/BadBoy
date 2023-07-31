@@ -47,3 +47,4 @@ export const useTeamStore = defineStore("teamStore", () => {
     getTeamQueue
   };
 });
+
