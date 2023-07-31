@@ -57,7 +57,10 @@
             </div>
         </div>
 
-        <div class="d-flex justify-center align-center h-100 background">
+        <div
+            class="d-flex justify-center align-center h-100 background"
+            v-if="$vuetify.display.mobile"
+        >
             <div>
                 <div class="d-flex justify-center align-center">
                     <img src="./../assets/swipe-up.svg" alt="swipe up" />
@@ -284,6 +287,9 @@ textarea:focus {
     outline: none !important;
     border: 1px solid #7378db;
     box-shadow: 0 0 10px #eeeeee;
+}
+::v-deep(.v-container) {
+    max-width: 100% !important;
 }
 .background {
     position: fixed;
