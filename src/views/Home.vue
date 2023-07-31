@@ -192,9 +192,9 @@ function randomTeam() {
     setWinScore(winScore.value)
     setWinStreak(winStreak.value)
     member.value = shufferMember(member.value)
-    // member.value.forEach((player) => {
-    //     addTeamMember(player)
-    // })
+    member.value.forEach((player) => {
+        addTeamMember(player)
+    })
     // router.push({ name: 'TeamView' })
 }
 </script>
