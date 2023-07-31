@@ -3,6 +3,7 @@
         <div class="mb-2" style="font-size: 20px; font-weight: bold">
             ทีมปัจจุบัน
         </div>
+
         <div>
             <CardVersus
                 v-for="(team, index) in court"
@@ -12,22 +13,24 @@
                 :team-b="{ score: team.scoreTeamB }"
             >
                 <template #teamA>
-                    team {{ getTeamQueue(index * 2 + 1)?.order }}
-                    <!-- <div
-                        v-for="member in getTeamQueue(index * 2 + 1)?.member"
+                    team
+                    {{ teams[index][0].order }}
+                    <div
+                        v-for="member in teams[index][0].member"
                         class="trunt-word"
                     >
                         {{ member }}
-                    </div> -->
+                    </div>
                 </template>
                 <template #teamB>
-                    team {{ getTeamQueue((index + 1) * 2)?.order }}
-                    <!-- <div
-                        v-for="member in getTeamQueue((index + 1) * 2)?.member"
+                    team
+                    {{ teams[index][1].order }}
+                    <div
+                        v-for="member in teams[index][1].member"
                         class="trunt-word"
                     >
                         {{ member }}
-                    </div> -->
+                    </div>
                 </template>
             </CardVersus>
         </div>
@@ -37,7 +40,7 @@
             </div>
             <div>
                 <v-card
-                    v-for="team in getRemainQueue()"
+                    v-for="team in teamStore.getRemainQueue()"
                     class="mb-2"
                     elevation="0"
                     style="
@@ -59,14 +62,26 @@ import { useTeamStore } from '@/store/team'
 import { storeToRefs } from 'pinia'
 import { useCourtStore } from '@/store/court'
 import CardVersus from '@/components/page/teamListView/CardTeamVersus.vue'
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import router from '@/router'
-const { getTeamQueue, getRemainQueue } = useTeamStore()
+const teamStore = useTeamStore()
 const { court } = storeToRefs(useCourtStore())
-const teamRemain = computed(() => getRemainQueue())
+const teamRemain = computed(() => teamStore.getRemainQueue())
+function getTeam(num: number) {
+    console.log(1)
+    return teamStore.getTeamQueue(num)
+    // return getTeamQueue(num)
+}
+const teams = ref<any>([])
+court.value?.forEach((e, index) => {
+    const merge = []
+    const dataA = teamStore.getTeamQueue(index * 2 + 1)
+    merge.push(dataA)
+    const dataB = teamStore.getTeamQueue((index + 1) * 2)
+    merge.push(dataB)
+    teams.value.push(merge)
+})
 onMounted(() => {
-    console.log('team view success')
-
     if (!court.value) router.push({ name: 'HomePage' })
 })
 </script>

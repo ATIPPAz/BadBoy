@@ -3,6 +3,7 @@
         elevation="0"
         style="border-radius: 8px; border: 1px solid rgb(98, 98, 98)"
     >
+        <slot></slot>
         <template v-slot:title>
             <div class="d-flex align-center">
                 <span> คอร์ท {{ props.courtNumber }} </span>
