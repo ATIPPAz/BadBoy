@@ -4,24 +4,14 @@
         <div class="ma-4 h-100">
             <default-view class="h-100" />
         </div>
-        <!-- <v-bottom-navigation :elevation="6" grow :active="activeNavigateBottom">
+        <v-bottom-navigation :elevation="6" grow :active="true">
+            ttttttttttttttttttttttttttttttttt
+
             <v-btn @click="$router.push({ name: 'Home' })">
                 <v-icon>mdi-home</v-icon>
                 Home
             </v-btn>
-
-            <v-btn value="favorites">
-                <v-icon>mdi-heart</v-icon>
-
-                อนาคต
-            </v-btn>
-
-            <v-btn value="nearby">
-                <v-icon>mdi-map-marker</v-icon>
-
-                อนาคต
-            </v-btn>
-        </v-bottom-navigation> -->
+        </v-bottom-navigation>
     </v-app>
 </template>
 
