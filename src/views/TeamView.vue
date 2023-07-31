@@ -11,7 +11,7 @@
                 :team-a="{ score: team.scoreTeamA }"
                 :team-b="{ score: team.scoreTeamB }"
             >
-                <template v-slot:teamA>
+                <template #teamA>
                     team {{ getTeamQueue(index * 2 + 1)?.order }}
                     <div
                         v-for="member in getTeamQueue((index*2)+1)!.member"
@@ -20,7 +20,7 @@
                         {{ member }}
                     </div>
                 </template>
-                <template v-slot:teamB>
+                <template #teamB>
                     team {{ getTeamQueue((index + 1) * 2)?.order }}
                     <div
                         v-for="member in getTeamQueue((index+1)*2)!.member"
