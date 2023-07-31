@@ -1,4 +1,6 @@
 <template>
+    {{ court }}
+    {{ getTeamQueue(0) }}
     <!-- <div class="h-100">
         <div class="mb-2" style="font-size: 20px; font-weight: bold">
             ทีมปัจจุบัน
@@ -52,7 +54,6 @@
             </div>
         </div>
     </div> -->
-    s
 </template>
 
 <script setup lang="ts">
