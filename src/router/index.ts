@@ -1,5 +1,7 @@
 // Composables
+import { defineComponent } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import TeamView from '@/views/TeamView.vue'
 
 const routes = [
   {
@@ -20,7 +22,7 @@ const routes = [
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "home" */ '@/views/TeamView.vue'),
+        component: () => TeamView,
       },
       {
         path: 'counterVuew',

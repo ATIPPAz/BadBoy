@@ -60,9 +60,14 @@ import { storeToRefs } from 'pinia'
 import { useCourtStore } from '@/store/court'
 import CardVersus from '@/components/page/teamListView/CardTeamVersus.vue'
 import { computed } from 'vue'
+import { onMounted } from 'vue'
+import router from '@/router'
 const { getTeamQueue, getRemainQueue } = useTeamStore()
 const { court } = storeToRefs(useCourtStore())
 const teamRemain = computed(() => getRemainQueue())
+onMounted(() => {
+    if (!court.value) router.push({ name: 'Home' })
+})
 </script>
 <style scoped lang="scss">
 .trunt-word {
