@@ -1,7 +1,5 @@
 <template>
-    {{ court }}
-    {{ getTeamQueue(1) }}
-    <!-- <div class="h-100">
+    <div class="h-100">
         <div class="mb-2" style="font-size: 20px; font-weight: bold">
             ทีมปัจจุบัน
         </div>
@@ -16,7 +14,7 @@
                 <template #teamA>
                     team {{ getTeamQueue(index * 2 + 1)?.order }}
                     <div
-                        v-for="member in getTeamQueue((index*2)+1)!.member"
+                        v-for="member in getTeamQueue(index * 2 + 1)?.member"
                         class="trunt-word"
                     >
                         {{ member }}
@@ -25,7 +23,7 @@
                 <template #teamB>
                     team {{ getTeamQueue((index + 1) * 2)?.order }}
                     <div
-                        v-for="member in getTeamQueue((index+1)*2)!.member"
+                        v-for="member in getTeamQueue((index + 1) * 2)?.member"
                         class="trunt-word"
                     >
                         {{ member }}
@@ -53,7 +51,7 @@
                 </v-card>
             </div>
         </div>
-    </div> -->
+    </div>
 </template>
 
 <script setup lang="ts">
