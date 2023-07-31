@@ -239,8 +239,8 @@ function randomTeam() {
         return
     }
     member.value = generateMember()
-    const splitTeam = Math.ceil(member.value.length / teamLimit.value!)
-    if (splitTeam < courtNumber.value! * 2) {
+    const splitTeam = Math.ceil(member.value.length / teamLimit.value)
+    if (splitTeam < courtNumber.value * 2) {
         alert(
             `ใส่จำนวนคนไม่พอ ขั้นต่ำ ${
                 courtNumber.value * 2 * teamLimit.value

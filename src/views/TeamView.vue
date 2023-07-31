@@ -59,8 +59,7 @@ import { useTeamStore } from '@/store/team'
 import { storeToRefs } from 'pinia'
 import { useCourtStore } from '@/store/court'
 import CardVersus from '@/components/page/teamListView/CardTeamVersus.vue'
-import { computed } from 'vue'
-import { onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import router from '@/router'
 const { getTeamQueue, getRemainQueue } = useTeamStore()
 const { court } = storeToRefs(useCourtStore())
