@@ -1,6 +1,6 @@
 <template>
     {{ court }}
-    {{ getTeamQueue(0) }}
+    {{ getTeamQueue(1) }}
     <!-- <div class="h-100">
         <div class="mb-2" style="font-size: 20px; font-weight: bold">
             ทีมปัจจุบัน
