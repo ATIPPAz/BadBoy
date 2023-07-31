@@ -1,5 +1,8 @@
 <template>
-    <v-card>
+    <v-card
+        elevation="0"
+        style="border-radius: 8px; border: 1px solid rgb(98, 98, 98)"
+    >
         <template v-slot:title>
             <div class="d-flex align-center">
                 <span> คอร์ท {{ props.courtNumber }} </span>
@@ -43,25 +46,28 @@
                 class="d-flex align-center justify-space-between"
                 v-if="openCard"
             >
-                <span class="d-flex justify-center" style="width: 33.33%">{{
-                    props.teamA.name
-                }}</span>
+                <div style="width: 33.33%">
+                    <slot name="teamA"></slot>
+                </div>
                 <span style="width: 33.33%"></span>
-                <span class="d-flex justify-center" style="width: 33.33%">
-                    {{ props.teamB.name }}
+                <span style="width: 33.33%">
+                    <slot name="teamB"></slot>
                 </span>
             </div>
         </template>
         <v-card-actions v-if="openCard">
             <v-spacer></v-spacer>
-            <v-btn @click="$router.push({ name: 'CounterVuew' })">Go</v-btn>
+            <v-btn
+                @click="$router.push({ name: 'CounterVuew' })"
+                class="w-100 bg-primary"
+                >Go</v-btn
+            >
         </v-card-actions>
     </v-card>
 </template>
 <script setup lang="ts">
 interface Team {
     score: number
-    name: string
 }
 import { ref } from 'vue'
 const props = defineProps<{ courtNumber: number; teamA: Team; teamB: Team }>()

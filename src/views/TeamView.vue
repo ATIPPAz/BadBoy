@@ -1,21 +1,52 @@
 <template>
     <div class="h-100">
-        <div class="mb-2">ทีมปัจจุบัน</div>
+        <div class="mb-2" style="font-size: 20px; font-weight: bold">
+            ทีมปัจจุบัน
+        </div>
         <div>
             <CardVersus
                 v-for="(team, index) in court"
-                class="mb-6"
+                class="mb-4"
                 :court-number="index + 1"
-                :team-a="{name:getTeamQueue((index*2)+1)!.member.join(' '),score:team.scoreTeamA}"
-                :team-b="{name:getTeamQueue((index+1)*2)!.member.join(' '),score:team.scoreTeamB}"
-            />
+                :team-a="{ score: team.scoreTeamA }"
+                :team-b="{ score: team.scoreTeamB }"
+            >
+                <template v-slot:teamA>
+                    team {{ getTeamQueue(index * 2 + 1)?.order }}
+                    <div
+                        v-for="member in getTeamQueue((index*2)+1)!.member"
+                        class="trunt-word"
+                    >
+                        {{ member }}
+                    </div>
+                </template>
+                <template v-slot:teamB>
+                    team {{ getTeamQueue((index + 1) * 2)?.order }}
+                    <div
+                        v-for="member in getTeamQueue((index+1)*2)!.member"
+                        class="trunt-word"
+                    >
+                        {{ member }}
+                    </div>
+                </template>
+            </CardVersus>
         </div>
         <div v-if="teamRemain.length > 0">
-            <div class="mb-2">ทีมต่อไป</div>
+            <div class="mb-2" style="font-size: 20px; font-weight: bold">
+                ทีมต่อไป
+            </div>
             <div>
-                <v-card v-for="team in getRemainQueue()" class="mb-2">
+                <v-card
+                    v-for="team in getRemainQueue()"
+                    class="mb-2"
+                    elevation="0"
+                    style="
+                        border-radius: 8px;
+                        border: 1px solid rgb(203, 203, 203);
+                    "
+                >
                     <template v-slot:text>
-                        team: {{ team.member.join(' , ') }}
+                        team{{ team.order }} : {{ team.member.join(' , ') }}
                     </template>
                 </v-card>
             </div>
@@ -33,3 +64,10 @@ const { getTeamQueue, getRemainQueue } = useTeamStore()
 const { court } = storeToRefs(useCourtStore())
 const teamRemain = computed(() => getRemainQueue())
 </script>
+<style scoped lang="scss">
+.trunt-word {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+</style>

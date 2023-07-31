@@ -85,8 +85,8 @@ function minusScoreB() {
 }
 .btn {
     border-radius: 10px;
-    width: 120px;
-    height: 200px;
+    width: 80px;
+    height: 150px;
 }
 .red {
     background-color: red;
