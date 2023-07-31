@@ -13,7 +13,7 @@ export const useTeamStore = defineStore("teamStore", () => {
   function getTeamQueue(number: number) {
     if (number < 1) return
     nextTeam.value = number
-    return teamState.value[number - 1]
+    return teamState.value.length >= number - 1 ? teamState.value[number - 1] : teamState.value[0]
   }
 
   function getRemainQueue() {
