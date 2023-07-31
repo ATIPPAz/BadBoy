@@ -12,6 +12,8 @@ export const useTeamStore = defineStore("teamStore", () => {
 
   function getTeamQueue(number: number) {
     if (number < 1) return
+    console.log(teamState.value);
+
     nextTeam.value = number
     return teamState.value[number - 1]
   }

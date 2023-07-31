@@ -89,6 +89,9 @@ function resetTextTeam() {
 function randomTeam() {
     member.value = generateMember()
     const splitTeam = Math.ceil(member.value.length / teamLimit.value)
+    console.log(splitTeam)
+    console.log(courtNumber.value * 2)
+
     if (member.value.length <= 0 || splitTeam < courtNumber.value * 2) {
         alert('ใส่จำนวนคนไม่พอ')
         return

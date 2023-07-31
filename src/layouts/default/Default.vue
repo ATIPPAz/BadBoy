@@ -20,13 +20,13 @@
             <v-btn value="favorites">
                 <v-icon>mdi-heart</v-icon>
 
-                Favorites
+                อนาคต
             </v-btn>
 
             <v-btn value="nearby">
                 <v-icon>mdi-map-marker</v-icon>
 
-                Nearby
+                อนาคต
             </v-btn>
         </v-bottom-navigation>
     </v-app>
