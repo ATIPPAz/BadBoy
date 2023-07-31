@@ -50,7 +50,7 @@
         </template>
         <v-card-actions v-if="openCard">
             <v-spacer></v-spacer>
-            <v-btn>Go</v-btn>
+            <v-btn @click="$router.push({ name: 'CounterVuew' })">Go</v-btn>
         </v-card-actions>
     </v-card>
 </template>
