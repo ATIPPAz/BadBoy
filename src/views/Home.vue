@@ -162,7 +162,7 @@
         </v-card>
     </v-dialog>
     <v-btn
-        style="position: fixed; bottom: 16px; right: 16px"
+        style="position: fixed; bottom: 80px; right: 16px"
         v-if="!isActive && !$vuetify.display.mobile"
         @click="isActive = true"
     >
@@ -261,9 +261,9 @@ function randomTeam() {
     setWinScore(winScore.value)
     setWinStreak(winStreak.value)
     member.value = shufferMember(member.value)
-    // member.value.forEach((player) => {
-    //     addTeamMember(player)
-    // })
+    member.value.forEach((player) => {
+        addTeamMember(player)
+    })
     // router.push({ name: 'TeamView' })
 }
 </script>
