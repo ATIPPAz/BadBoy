@@ -99,7 +99,7 @@
                                 class="d-flex align-center"
                             >
                                 <div v-if="!showAdvanceSetting">
-                                    สามารถตั้งค่าเพิ่มเติมได้ที่ปุ่มข้างๆ
+                                    ตั้งค่าเพิ่มเติมที่ปุ่มข้างๆ
                                 </div>
                             </div>
                             <div
