@@ -5,7 +5,10 @@
             <default-view class="h-100" />
         </div>
         <v-bottom-navigation :elevation="6" grow :active="true">
-            ttttttttttttttttttttttttttttttttt
+            <v-btn @click="$router.back()">
+                <v-icon>mdi-arrow-left</v-icon>
+                Back
+            </v-btn>
 
             <v-btn @click="$router.push({ name: 'Home' })">
                 <v-icon>mdi-home</v-icon>
@@ -16,10 +19,6 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-
-const activeNavigateBottom = ref(true)
-
 import DefaultBar from './AppBar.vue'
 import DefaultView from './View.vue'
 </script>

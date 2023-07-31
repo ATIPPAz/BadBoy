@@ -10,7 +10,6 @@
         style="position: relative"
     >
         <div class="content">
-            {{ member }}
             0 court <br />
             0 player
         </div>
@@ -46,7 +45,7 @@
                         <span> List of team members</span>
 
                         <textarea v-model="textTeam"></textarea>
-                        <div class="d-flex justify-end mb-4">
+                        <div class="d-flex justify-end my-2">
                             <div
                                 @click="
                                     showAdvanceSetting = !showAdvanceSetting
@@ -111,20 +110,17 @@
         v-if="!isActive && !$vuetify.display.mobile"
         @click="isActive = true"
     >
-        สร้าวงทีม
+        สร้างทีม
     </v-btn>
 </template>
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useTeamStore } from '@/store/team'
 
 import { useCourtStore } from '@/store/court'
 import TeamAdvanceSetting from '@/components/page/ramdomTeam/AdvanceSetting.vue'
 import router from '@/router'
 const isActive = ref(false)
-const wordAdvanceSetting = computed(() =>
-    showAdvanceSetting.value ? 'ปิด' : 'เปิด'
-)
 function swipe(direction: string) {
     if (direction === 'Up') {
         isActive.value = true
@@ -171,13 +167,25 @@ function shufferMember(member: string[]) {
 }
 function resetTextTeam() {
     localStorage.removeItem('textTeam')
+    localStorage.removeItem('courtNumber')
+    localStorage.removeItem('winScore')
+    localStorage.removeItem('winStreak')
+    localStorage.removeItem('teamLimit')
     textTeam.value = ''
+    courtNumber.value = 1
+    winScore.value = 15
+    winStreak.value = 2
+    teamLimit.value = 2
 }
 function randomTeam() {
     isActive.value = false
     member.value = generateMember()
-    const splitTeam = Math.ceil(member.value.length / teamLimit.value)
-    if (member.value.length <= 0 || splitTeam < courtNumber.value * 2) {
+    const splitTeam = Math.ceil(member.value.length / teamLimit.value!)
+    if (member.value.length <= 0 || textTeam.value.trim() === '') {
+        alert('ใส่ชื่อผู้เล่นด้วยยย')
+        return
+    }
+    if (splitTeam < courtNumber.value! * 2) {
         alert('ใส่จำนวนคนไม่พอ')
         return
     }

@@ -1,9 +1,8 @@
 <template>
     <div>
         <div class="mt-2">
-            <span class="ml-10">จำนวนคนในทืม</span>
-            <br />
-            <div class="d-flex justify-space-between bg-green">
+            <!-- <br /> -->
+            <!-- <div class="d-flex justify-space-between bg-green">
                 <div
                     class="rounded-s-lg d-flex align-center justify-center"
                     style="width: 40px"
@@ -24,7 +23,8 @@
                 </div>
             </div>
 
-            <br />
+            <br /> -->
+            <span class="ml-10">จำนวนคนในทืม</span>
             <v-text-field
                 density="compact"
                 :rules="rules"
@@ -41,7 +41,6 @@
                 </template>
                 <template v-slot:prepend>
                     <v-icon
-                        class="bg-red"
                         color="red"
                         @click="
                             () => {
