@@ -18,7 +18,19 @@
         </v-btn>
         <div class="content h-100" style="position: relative">
             <div>
-                <span>กรอกรายชื่อทีม</span>
+                <div class="d-flex justify-space-between align-center mb-2">
+                    <div class="mb-1 text-gray-text" style="font-size: 18px">
+                        กรอกรายชื่อทีม
+                    </div>
+                    <v-btn
+                        @click="getFormat"
+                        class="bg-indigo-lighten-3"
+                        rounded="xl"
+                    >
+                        <v-icon> mdi-content-copy </v-icon>
+                        รูปแบบ
+                    </v-btn>
+                </div>
                 <v-textarea
                     v-model="textTwoDay"
                     placeholder="ตัวอย่างเช่น
@@ -33,12 +45,17 @@
                 >
                 </v-textarea>
                 <div class="d-flex justify-space-between">
-                    <v-btn @click="tryToSplitDay" class="bg-primary"
-                        >สร้างรายชื่อตามวัน</v-btn
+                    <v-btn
+                        @click="tryToSplitDay"
+                        class="bg-primary"
+                        rounded="xl"
                     >
-                    <v-btn @click="getFormat" class="bg-indigo-lighten-3">
-                        <v-icon> mdi-content-copy </v-icon> รูปแบบ</v-btn
-                    >
+                        สร้างรายชื่อตามวัน
+                    </v-btn>
+
+                    <v-btn @click="textTwoDay = ''" class="bg-red" rounded="xl">
+                        reset
+                    </v-btn>
                 </div>
                 <br />
                 <div class="mb-2">
@@ -46,6 +63,7 @@
                         @click="satCopy"
                         class="bg-purple-lighten-2"
                         v-if="openCopyDay"
+                        rounded="xl"
                     >
                         <v-icon> mdi-content-copy </v-icon>
                         รายชื่อวันเสาร์
@@ -56,6 +74,7 @@
                         @click="sunCopy"
                         class="bg-red-lighten-2"
                         v-if="openCopyDay"
+                        rounded="xl"
                     >
                         <v-icon> mdi-content-copy </v-icon>
                         รายชื่อวันอาทิตย์
@@ -130,7 +149,7 @@
                     <div>
                         <v-divider
                             :thickness="5"
-                            class="border-opacity-100 mt-4"
+                            class="border-opacity-100 mt-3"
                             color="primary"
                             style="width: 150px; border-radius: 30px"
                         ></v-divider>
@@ -295,10 +314,17 @@ function tryToSplitDay() {
         let satFinish = false
         let index = 0
         while (!satFinish) {
-            if (sat[index].includes(`${index + 1}.`)) {
+            if (sat[index] && sat[index].includes(`${index + 1}.`)) {
                 console.log(sat[index])
 
                 const strSplit = index + 1 + '.'
+                saturdayMember.value +=
+                    sat[index].trim().split(strSplit)[1] + '\n'
+            } else if (
+                sat[index] &&
+                sat[index].includes(`/${index + 1}[A-Z])/`)
+            ) {
+                const strSplit = index + 1 + ''
                 saturdayMember.value +=
                     sat[index].trim().split(strSplit)[1] + '\n'
             } else {
@@ -311,8 +337,14 @@ function tryToSplitDay() {
 
         let sunFinish = false
         while (!sunFinish) {
+            console.log('sun')
+
             if (sun[index] && sun[index].includes(`${index + 1}.`)) {
                 const strSplit = index + 1 + '.'
+                sundayMember.value +=
+                    sun[index].trim().split(strSplit)[1] + '\n'
+            } else if (sun[index] && sun[index].includes(`${index + 1}`)) {
+                const strSplit = index + 1 + ''
                 sundayMember.value +=
                     sun[index].trim().split(strSplit)[1] + '\n'
             } else {

@@ -24,7 +24,7 @@
             </div>
 
             <br /> -->
-            <span>จำนวนคนในทีม</span>
+            <span class="text-gray-text">จำนวนคนในทีม</span>
             <v-text-field density="compact" :value="props.teamLimit" readonly>
                 <template v-slot:append-inner>
                     <div class="d-flex">
@@ -57,7 +57,7 @@
             </v-text-field>
         </div>
         <div class="mt-2">
-            <span>จำนวนคอร์ท</span>
+            <span class="text-gray-text">จำนวนคอร์ท</span>
             <v-text-field readonly density="compact" :value="props.courtNumber">
                 <template v-slot:append-inner>
                     <div class="d-flex">
@@ -93,7 +93,7 @@
             </v-text-field>
         </div>
         <div class="mt-2">
-            <span>ชนะติดต่อกัน</span>
+            <span class="text-gray-text">ชนะติดต่อกัน</span>
             <v-text-field readonly :value="props.winStreak" density="compact">
                 <template v-slot:append-inner>
                     <div class="d-flex">
@@ -126,7 +126,7 @@
             </v-text-field>
         </div>
         <div class="mt-2">
-            <span>เเต้มชนะ</span>
+            <span class="text-gray-text">เเต้มชนะ</span>
             <v-text-field density="compact" :value="winScore" readonly>
                 <template v-slot:append-inner>
                     <div class="d-flex">

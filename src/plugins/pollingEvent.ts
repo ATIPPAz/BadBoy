@@ -18,6 +18,8 @@ export function $polling() {
   }
 
   function pullConnection() {
+    console.log('call api');
+
     fetch(path).then(
       (e) => e.json()
     )
