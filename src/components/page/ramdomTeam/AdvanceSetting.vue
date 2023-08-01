@@ -24,152 +24,145 @@
             </div>
 
             <br /> -->
-            <span class="ml-10">จำนวนคนในทีม</span>
-            <v-text-field
-                density="compact"
-                :rules="rules"
-                :value="props.teamLimit"
-                readonly
-            >
-                <template v-slot:append>
-                    <v-icon
-                        color="green"
-                        @click="emits('update:teamLimit', props.teamLimit + 1)"
-                    >
-                        mdi-plus
-                    </v-icon>
-                </template>
-                <template v-slot:prepend>
-                    <v-icon
-                        color="red"
-                        @click="
-                            () => {
-                                if (props.teamLimit > 1)
-                                    emits(
-                                        'update:teamLimit',
-                                        props.teamLimit - 1
-                                    )
-                            }
-                        "
-                    >
-                        mdi-minus
-                    </v-icon>
-                </template>
-                <template v-slot:details style="display: none"> </template>
-            </v-text-field>
-        </div>
-        <div class="mt-2">
-            <span class="ml-10">จำนวนคอร์ท</span>
-            <v-text-field
-                :rules="rules"
-                readonly
-                density="compact"
-                :value="props.courtNumber"
-            >
-                <template v-slot:details>
-                    <div style="display: none"></div>
-                </template>
-                <template v-slot:append>
-                    <v-icon
-                        color="green"
-                        @click="
-                            emits('update:courtNumber', props.courtNumber + 1)
-                        "
-                    >
-                        mdi-plus
-                    </v-icon>
-                </template>
-                <template v-slot:prepend>
-                    <v-icon
-                        color="red"
-                        @click="
-                            () => {
-                                if (props.courtNumber > 1)
-                                    emits(
-                                        'update:courtNumber',
-                                        props.courtNumber - 1
-                                    )
-                            }
-                        "
-                    >
-                        mdi-minus
-                    </v-icon>
+            <span>จำนวนคนในทีม</span>
+            <v-text-field density="compact" :value="props.teamLimit" readonly>
+                <template v-slot:append-inner>
+                    <div class="d-flex">
+                        <v-icon
+                            class="click-btn"
+                            color="red"
+                            @click="
+                                () => {
+                                    if (props.teamLimit > 1)
+                                        emits(
+                                            'update:teamLimit',
+                                            props.teamLimit - 1
+                                        )
+                                }
+                            "
+                        >
+                            mdi-minus
+                        </v-icon>
+                        <v-icon
+                            class="ml-1 click-btn"
+                            color="green"
+                            @click="
+                                emits('update:teamLimit', props.teamLimit + 1)
+                            "
+                        >
+                            mdi-plus
+                        </v-icon>
+                    </div>
                 </template>
             </v-text-field>
         </div>
         <div class="mt-2">
-            <span class="ml-10">ชนะติดต่อกัน</span>
-            <v-text-field
-                :rules="rules"
-                readonly
-                :value="props.winStreak"
-                density="compact"
-            >
-                <template v-slot:append>
-                    <v-icon
-                        color="green"
-                        @click="emits('update:winStreak', props.winStreak + 1)"
-                    >
-                        mdi-plus
-                    </v-icon>
-                </template>
-                <template v-slot:prepend>
-                    <v-icon
-                        color="red"
-                        @click="
-                            () => {
-                                if (props.winStreak > 1)
-                                    emits(
-                                        'update:winStreak',
-                                        props.winStreak - 1
-                                    )
-                            }
-                        "
-                    >
-                        mdi-minus
-                    </v-icon>
+            <span>จำนวนคอร์ท</span>
+            <v-text-field readonly density="compact" :value="props.courtNumber">
+                <template v-slot:append-inner>
+                    <div class="d-flex">
+                        <v-icon
+                            class="click-btn"
+                            color="red"
+                            @click="
+                                () => {
+                                    if (props.courtNumber > 1)
+                                        emits(
+                                            'update:courtNumber',
+                                            props.courtNumber - 1
+                                        )
+                                }
+                            "
+                        >
+                            mdi-minus
+                        </v-icon>
+                        <v-icon
+                            class="ml-1 click-btn"
+                            color="green"
+                            @click="
+                                emits(
+                                    'update:courtNumber',
+                                    props.courtNumber + 1
+                                )
+                            "
+                        >
+                            mdi-plus
+                        </v-icon>
+                    </div>
                 </template>
             </v-text-field>
         </div>
         <div class="mt-2">
-            <span class="ml-10">เเต้มชนะ</span>
-            <v-text-field
-                density="compact"
-                :rules="rules"
-                :value="winScore"
-                readonly
-            >
-                <template v-slot:append>
-                    <v-icon
-                        color="green"
-                        @click="
-                            () => {
-                                if (winScoreIndex >= listScoreGame.length - 1)
-                                    return
-                                hasChange = true
-                                winScoreIndex += 1
-                                emits('update:winScore', winScore)
-                            }
-                        "
-                    >
-                        mdi-chevron-right
-                    </v-icon>
+            <span>ชนะติดต่อกัน</span>
+            <v-text-field readonly :value="props.winStreak" density="compact">
+                <template v-slot:append-inner>
+                    <div class="d-flex">
+                        <v-icon
+                            class="click-btn"
+                            color="red"
+                            @click="
+                                () => {
+                                    if (props.winStreak > 1)
+                                        emits(
+                                            'update:winStreak',
+                                            props.winStreak - 1
+                                        )
+                                }
+                            "
+                        >
+                            mdi-minus
+                        </v-icon>
+                        <v-icon
+                            class="ml-1 click-btn"
+                            color="green"
+                            @click="
+                                emits('update:winStreak', props.winStreak + 1)
+                            "
+                        >
+                            mdi-plus
+                        </v-icon>
+                    </div>
                 </template>
-                <template v-slot:prepend>
-                    <v-icon
-                        style="transform: scaleX(-1)"
-                        color="red"
-                        @click="
-                            () => {
-                                if (winScoreIndex < 1) return
-                                winScoreIndex -= 1
-                                hasChange = true
-                                emits('update:winScore', winScore)
-                            }
-                        "
-                    >
-                        mdi-chevron-right
-                    </v-icon>
+            </v-text-field>
+        </div>
+        <div class="mt-2">
+            <span>เเต้มชนะ</span>
+            <v-text-field density="compact" :value="winScore" readonly>
+                <template v-slot:append-inner>
+                    <div class="d-flex">
+                        <v-icon
+                            class="click-btn"
+                            color="red"
+                            @click="
+                                () => {
+                                    if (winScoreIndex < 1) return
+                                    winScoreIndex -= 1
+                                    hasChange = true
+                                    emits('update:winScore', winScore)
+                                }
+                            "
+                        >
+                            mdi-chevron-left
+                        </v-icon>
+                        <v-icon
+                            class="ml-1 click-btn"
+                            color="green"
+                            @click="
+                                () => {
+                                    if (
+                                        winScoreIndex >=
+                                        listScoreGame.length - 1
+                                    )
+                                        return
+                                    hasChange = true
+                                    winScoreIndex += 1
+                                    emits('update:winScore', winScore)
+                                }
+                            "
+                        >
+                            mdi-chevron-right
+                        </v-icon>
+                    </div>
                 </template>
             </v-text-field>
         </div>
@@ -214,5 +207,9 @@ const emits = defineEmits<{
 <style scoped lang="scss">
 ::v-deep(.v-input__details) {
     display: none;
+}
+.click-btn:active {
+    border-radius: 20px;
+    background-color: rgb(194, 194, 194);
 }
 </style>

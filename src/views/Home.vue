@@ -18,19 +18,49 @@
         </v-btn>
         <div class="content h-100" style="position: relative">
             <div>
-                {{ member }}
-                0 player <br />
-                0 court
-                <v-textarea v-model="textTwoDay"> </v-textarea>
-                <v-btn @click="tryToSplitDay">สร้างรายชื่อตามวัน</v-btn>
+                <span>กรอกรายชื่อทีม</span>
+                <v-textarea
+                    v-model="textTwoDay"
+                    placeholder="ตัวอย่างเช่น
+ตีแบดวันเสาร์ 16.40-19.00
+1.xxx
+2.xxx
+-——————
+
+ตีแบดวันอาทิตย์ 18.30-20.30
+1.xxx
+2.xxx"
+                >
+                </v-textarea>
+                <div class="d-flex justify-space-between">
+                    <v-btn @click="tryToSplitDay" class="bg-primary"
+                        >สร้างรายชื่อตามวัน</v-btn
+                    >
+                    <v-btn @click="getFormat" class="bg-indigo-lighten-3">
+                        <v-icon> mdi-content-copy </v-icon> รูปแบบ</v-btn
+                    >
+                </div>
                 <br />
-                <br />
-                <v-btn @click="satCopy" v-if="openCopyDay">
-                    copy รายชื่อวันเสาร์
-                </v-btn>
-                <v-btn @click="sunCopy" v-if="openCopyDay">
-                    copy รายชื่อวันอาทิตย์
-                </v-btn>
+                <div class="mb-2">
+                    <v-btn
+                        @click="satCopy"
+                        class="bg-purple-lighten-2"
+                        v-if="openCopyDay"
+                    >
+                        <v-icon> mdi-content-copy </v-icon>
+                        รายชื่อวันเสาร์
+                    </v-btn>
+                </div>
+                <div>
+                    <v-btn
+                        @click="sunCopy"
+                        class="bg-red-lighten-2"
+                        v-if="openCopyDay"
+                    >
+                        <v-icon> mdi-content-copy </v-icon>
+                        รายชื่อวันอาทิตย์
+                    </v-btn>
+                </div>
 
                 <!-- <div
                     style="
@@ -187,10 +217,10 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { useTeamStore } from '@/store/team'
-
 import { useCourtStore } from '@/store/court'
 import TeamAdvanceSetting from '@/components/page/ramdomTeam/AdvanceSetting.vue'
 import router from '@/router'
+
 const isActive = ref(false)
 function swipe(direction: string) {
     if (direction === 'Up') {
@@ -232,22 +262,35 @@ watch(
         openCopyDay.value = false
     }
 )
+function getFormat() {
+    navigator.clipboard.writeText(`ตีแบดวันเสาร์ xx.xx-xx.xx
+1.xxx
+--------
+
+ตีแบดวันอาทิตย์ xx.xx-xx.xx
+1.xxx
+`)
+}
 function tryToSplitDay() {
     saturdayMember.value = ''
     sundayMember.value = ''
     try {
         const text = textTwoDay.value.trim().split(/(?=1.)/)
+        if (textTwoDay.value.includes('วันอาทิตย์')) {
+            console.log('วันอาทิตย์')
+        }
+        if (textTwoDay.value.includes('วันเสาร์')) {
+            console.log('เสาร์')
+        }
+
         const day: string[] = []
         text.forEach((e, index) => {
             if (e.includes(`${1}.`)) {
                 day.push(e)
             }
         })
-        console.log(day + '\n---')
-
         const sat = day[0].split('\n')
         const sun = day[1].split('\n')
-        console.log(sat)
 
         let satFinish = false
         let index = 0
@@ -282,7 +325,6 @@ function tryToSplitDay() {
         openCopyDay.value = true
     } catch (e) {
         console.log(e)
-
         alert('ไม่ถูกรูปแบบ')
     }
 }

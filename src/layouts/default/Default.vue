@@ -5,22 +5,37 @@
             <default-view class="h-100" />
         </div>
         <v-bottom-navigation :elevation="6" grow :active="true">
-            <v-btn @click="$router.back()">
+            <!-- <v-btn @click="$router.back()">
                 <v-icon>mdi-arrow-left</v-icon>
                 Back
-            </v-btn>
+            </v-btn> -->
 
-            <v-btn @click="$router.push({ name: 'HomePage' })">
+            <v-btn @click="goPage('HomePage')">
                 <v-icon>mdi-home</v-icon>
                 Home
+            </v-btn>
+            <v-btn @click="goPage('TestPage')">
+                <v-icon>mdi-cog-outline</v-icon>
+                Test
             </v-btn>
         </v-bottom-navigation>
     </v-app>
 </template>
 
 <script lang="ts" setup>
+import router from '@/router'
 import DefaultBar from './AppBar.vue'
 import DefaultView from './View.vue'
+import { pageStatePluginSymbol } from '@/plugins/pageState'
+import { inject } from 'vue'
+const pageState = inject(pageStatePluginSymbol)!
+function goPage(name: string) {
+    if (pageState.isCreateTeam.value) {
+        if (!confirm('ต้องการเปลี่ยนหน้าหรือไม่')) return
+    }
+    pageState.resetCreateRoomTeam()
+    router.push({ name: name })
+}
 </script>
 <style scoped lang="scss">
 .v-dialog {

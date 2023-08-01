@@ -62,8 +62,10 @@ import { useTeamStore } from '@/store/team'
 import { storeToRefs } from 'pinia'
 import { useCourtStore } from '@/store/court'
 import CardVersus from '@/components/page/teamListView/CardTeamVersus.vue'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, inject } from 'vue'
+import { pageStatePluginSymbol } from '@/plugins/pageState'
 import router from '@/router'
+const pageState = inject(pageStatePluginSymbol)!
 const teamStore = useTeamStore()
 const { court } = storeToRefs(useCourtStore())
 const teamRemain = computed(() => teamStore.getRemainQueue())
@@ -77,7 +79,11 @@ court.value?.forEach((e, index) => {
     teams.value.push(merge)
 })
 onMounted(() => {
-    if (!court.value) router.push({ name: 'HomePage' })
+    if (!court.value) {
+        router.push({ name: 'HomePage' })
+    } else {
+        pageState.setCreateRoomTeam()
+    }
 })
 </script>
 <style scoped lang="scss">

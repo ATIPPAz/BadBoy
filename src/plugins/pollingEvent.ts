@@ -1,0 +1,53 @@
+import { type Plugin, type InjectionKey, ref, watch, reactive, computed } from 'vue'
+export type PluginInstance = ReturnType<typeof $polling>
+export const pollingPluginSymbol: InjectionKey<PluginInstance> = Symbol('$polling')
+export function $polling() {
+  const path = 'http://127.0.0.1:3001/pollingGetData'
+  let interval: any = null
+  const event: any = []
+  function addEventListening(fn: Function) {
+    event.push(fn)
+  }
+
+  async function endConnection(callback?: Function) {
+    console.log('remove interval');
+    clearInterval(interval);
+    setTimeout(() => {
+      if (callback) callback()
+    }, 1000);
+  }
+
+  function pullConnection() {
+    fetch(path).then(
+      (e) => e.json()
+    )
+      .then(e => {
+        event.forEach((fn: Function) => {
+          fn(e)
+        })
+      })
+  }
+
+  function startConection() {
+    if (interval) return
+    // pullConnection()
+    interval = setInterval(() => {
+      console.log('start polling');
+      pullConnection()
+    }, 10000);
+  }
+
+  return {
+    addEventListening,
+    endConnection,
+    startConection
+  }
+}
+
+const plugin: Plugin = {
+  install: (app, options) => {
+    const sample = $polling()
+    app.provide(pollingPluginSymbol, sample)
+  }
+}
+export default plugin
