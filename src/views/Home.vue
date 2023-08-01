@@ -24,7 +24,7 @@
                     </div>
                     <v-btn
                         @click="getFormat"
-                        class="bg-indigo-lighten-3"
+                        class="bg-indigo-lighten-2"
                         rounded="xl"
                     >
                         <v-icon> mdi-content-copy </v-icon>

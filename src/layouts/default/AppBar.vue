@@ -1,5 +1,5 @@
 <template>
-    <v-app-bar density="default" prominent class="rounded-b-lg elevation-4">
+    <v-app-bar density="default" class="rounded-b-lg elevation-4">
         <template v-slot:prepend>
             <!-- <v-app-bar-nav-icon
                 @click.stop="drawer = !drawer"
