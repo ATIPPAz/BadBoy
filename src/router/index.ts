@@ -10,14 +10,14 @@ const routes = [
     children: [
       {
         path: '',
-        name: 'HomePage',
+        name: 'Home-page',
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () => import('@/views/Home.vue'),
       },
       {
-        path: 'teamView',
+        path: 'team-view',
         name: 'TeamListPage',
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
@@ -25,15 +25,15 @@ const routes = [
         component: async () => await import('@/views/TeamView.vue'),
       },
       {
-        path: 'counterVuew',
+        path: 'counter-view',
         name: 'CounterPage',
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import('@/views/CounterVuew.vue'),
+        component: () => import('@/views/CounterView.vue'),
       },
       {
-        path: 'testSystem',
+        path: 'test-system',
         name: 'TestPage',
         component: () => import('@/views/TestView.vue'),
       }
