@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <default-bar />
-        <div class="ma-4 h-100">
+        <div class="mx-4 mt-10 mb-10 h-100">
             <default-view class="h-100" />
         </div>
         <v-bottom-navigation :elevation="6" grow :active="true">

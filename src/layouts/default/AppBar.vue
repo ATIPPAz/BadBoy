@@ -1,18 +1,15 @@
 <template>
-    <v-app-bar
-        color="primary"
-        density="compact"
-        prominent
-        class="rounded-b-lg elevation-0"
-    >
+    <v-app-bar density="default" prominent class="rounded-b-lg elevation-4">
         <template v-slot:prepend>
             <!-- <v-app-bar-nav-icon
                 @click.stop="drawer = !drawer"
             ></v-app-bar-nav-icon> -->
         </template>
 
-        <v-app-bar-title>
-            <span style="font-weight: bold"> BadBoy </span>
+        <v-app-bar-title
+            class="font-weight-bold d-flex justify-center pa-0 ma-0"
+        >
+            <span class="font-weight-bold text-primary"> BadBoy </span>
         </v-app-bar-title>
     </v-app-bar>
     <!-- <v-navigation-drawer v-model="drawer" location="left" temporary>

@@ -1,7 +1,7 @@
 <template>
-  <router-view />
+    <router-view style="background-color: #fafbfd" />
 </template>
 
 <script lang="ts" setup>
-  //
+//
 </script>

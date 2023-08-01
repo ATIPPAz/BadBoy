@@ -49,11 +49,17 @@
                         @click="tryToSplitDay"
                         class="bg-primary"
                         rounded="xl"
+                        :disabled="textTwoDay.length === 0"
                     >
                         สร้างรายชื่อตามวัน
                     </v-btn>
 
-                    <v-btn @click="textTwoDay = ''" class="bg-red" rounded="xl">
+                    <v-btn
+                        @click="textTwoDay = ''"
+                        class="bg-red"
+                        rounded="xl"
+                        :disabled="textTwoDay.length === 0"
+                    >
                         reset
                     </v-btn>
                 </div>
