@@ -37,13 +37,14 @@ export function $polling() {
             })
     }
 
-    function startConection() {
+    function startConection(fn: Function) {
         if (interval) return
         // pullConnection()
         interval = setInterval(() => {
             console.log('start polling')
-            pullConnection()
-        }, 10000)
+            fn()
+            // pullConnection()
+        }, 30000)
     }
 
     return {

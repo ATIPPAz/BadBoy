@@ -40,7 +40,7 @@ watch(
 )
 onMounted(async () => {
     polling.addEventListening(updateValue)
-    polling.startConection()
+    polling.startConection(updateValue)
     setTimeout(() => {
         console.log('timeout')
         pollingStop.value = false

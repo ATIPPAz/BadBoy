@@ -18,7 +18,7 @@
             ></v-text-field>
         </div>
         <div class="mt-12">
-            <div v-if="data.length > 0">
+            <div v-if="data.length != 0">
                 <v-card
                     v-for="i in data"
                     class="my-4"
@@ -34,24 +34,28 @@
                     <v-card-title>{{ i.roomData.roomName }}</v-card-title>
                     <v-card-text>
                         <div class="d-flex" style="overflow-x: hidden">
-                            <span
-                                class="d-flex"
-                                v-for="(n, nIndex) in i.roomData.allTeam"
-                            >
-                                {{ n.member.join(' , ') }}
-                            </span>
+                            <div class="trunt-word">
+                                <span v-for="(n, nIndex) in i.roomData.allTeam">
+                                    ทีม {{ n.member.join(' , ') }} &emsp;
+                                </span>
+                            </div>
                         </div>
                     </v-card-text>
                 </v-card>
             </div>
-            <div v-else>NoData</div>
+            <div v-if="!loading.loadingState.value && data.length == 0">
+                NoData
+            </div>
         </div>
     </div>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue'
-import { onMounted } from 'vue'
-import { ref } from 'vue'
+import { onMounted, ref, computed, inject, onUnmounted } from 'vue'
+import { loaderPluginSymbol } from '@/plugins/loading'
+import { pollingPluginSymbol } from '@/plugins/pollingEvent'
+
+const loading = inject(loaderPluginSymbol)!
+const polling = inject(pollingPluginSymbol)!
 const data = computed(() =>
     _data.value.filter(
         (e: any) => !search.value || e.roomData.roomName.includes(search.value)
@@ -59,10 +63,27 @@ const data = computed(() =>
 )
 const _data = ref<any>([])
 const search = ref('')
-onMounted(async () => {
+async function fetchData() {
+    console.log('work')
+
     _data.value = await fetch('https://bad-boy-service.vercel.app/room').then(
         (e) => e.json()
     )
-    console.log(_data.value)
+}
+onMounted(async () => {
+    loading.setLoadingOn()
+    await fetchData()
+    polling.startConection(fetchData)
+    loading.setLoadingOff()
+})
+onUnmounted(() => {
+    polling.endConnection()
 })
 </script>
+<style scoped lang="scss">
+.trunt-word {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+</style>

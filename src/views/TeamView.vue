@@ -66,6 +66,8 @@ const teamStore = useTeamStore()
 const { court } = storeToRefs(useCourtStore())
 const teamRemain = computed(() => teamStore.getRemainQueue())
 const teams = ref<any>([])
+import { loaderPluginSymbol } from '@/plugins/loading'
+const loading = inject(loaderPluginSymbol)!
 court.value?.forEach((e, index) => {
     const merge = []
     const dataA = teamStore.getTeamQueue(index * 2 + 1)
@@ -81,6 +83,7 @@ const courtNumber = ref(0)
 const teamLimit = ref(0)
 onMounted(async () => {
     try {
+        loading.setLoadingOn()
         const roomId = route.params.roomId
         if (!roomId) throw new Error('')
 
@@ -94,6 +97,7 @@ onMounted(async () => {
         courtNumber.value = data.courtNumber
         teamLimit.value = data.teamLimit
         setTeam(data)
+        loading.setLoadingOff()
 
         // if (!court.value) {
         // } else {
