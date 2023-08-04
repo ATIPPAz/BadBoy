@@ -311,66 +311,59 @@ function tryToSplitDay() {
     saturdayMember.value = ''
     sundayMember.value = ''
     try {
-        const text = textTwoDay.value.trim().split(/(?=1.)/)
+        let remain = textTwoDay.value
+        let sun: any = null
+        let sat: any = null
+
         if (textTwoDay.value.includes('วันอาทิตย์')) {
-            console.log('วันอาทิตย์')
+            remain = textTwoDay.value.trim().split('วันอาทิตย์')[0]
+            sun = textTwoDay.value.trim().split('วันอาทิตย์')[1].split('\n')
         }
         if (textTwoDay.value.includes('วันเสาร์')) {
-            console.log('เสาร์')
+            sat = remain.trim().split('วันเสาร์')[1].split('\n')
         }
-
-        const day: string[] = []
-        text.forEach((e, index) => {
-            if (e.includes(`${1}.`)) {
-                day.push(e)
-            }
-        })
-        const sat = day[0].split('\n')
-        const sun = day[1].split('\n')
-
         let satFinish = false
         let index = 0
         while (!satFinish) {
-            if (sat[index] && sat[index].includes(`${index + 1}.`)) {
-                console.log(sat[index])
-
-                const strSplit = index + 1 + '.'
+            if (sat && sat[index].trim() === '') {
+            } else if (sat[index] && sat[index].includes(`${index}.`)) {
+                const strSplit = index + '.'
                 saturdayMember.value +=
                     sat[index].trim().split(strSplit)[1] + '\n'
-            } else if (
-                sat[index] &&
-                sat[index].includes(`/${index + 1}[A-Z])/`)
-            ) {
-                const strSplit = index + 1 + ''
+            } else if (sat[index] && sat[index].includes(`/${index}[A-Z])/`)) {
+                const strSplit = index + ''
                 saturdayMember.value +=
                     sat[index].trim().split(strSplit)[1] + '\n'
             } else {
                 satFinish = true
             }
+            if (index === sat.length - 1) {
+                satFinish = true
+            }
             index++
         }
-        index = 0
         console.log(saturdayMember.value)
-
+        index = 0
         let sunFinish = false
         while (!sunFinish) {
-            console.log('sun')
-
-            if (sun[index] && sun[index].includes(`${index + 1}.`)) {
-                const strSplit = index + 1 + '.'
+            if (sun && sun[index].trim() === '') {
+            } else if (sun && sun[index] && sun[index].includes(`${index}.`)) {
+                const strSplit = index + '.'
                 sundayMember.value +=
                     sun[index].trim().split(strSplit)[1] + '\n'
-            } else if (sun[index] && sun[index].includes(`${index + 1}`)) {
-                const strSplit = index + 1 + ''
+            } else if (sun && sun[index] && sun[index].includes(`${index}`)) {
+                const strSplit = index + ''
                 sundayMember.value +=
                     sun[index].trim().split(strSplit)[1] + '\n'
             } else {
                 sunFinish = true
             }
+            if (index === sun.length - 1) {
+                sunFinish = true
+            }
             index++
         }
         console.log(sundayMember.value)
-
         openCopyDay.value = true
     } catch (e) {
         console.log(e)
