@@ -165,6 +165,15 @@
             <v-container class="h-100 pa-6 ma-0">
                 <v-row no-gutters class="h-100">
                     <v-col align-self="start" cols="12">
+                        <div>
+                            <div style="color: #838383; margin-bottom: 12px">
+                                Room Name
+                            </div>
+                            <v-text-field
+                                v-model="roomName"
+                                placeholder="room name"
+                            ></v-text-field>
+                        </div>
                         <div style="color: #838383; margin-bottom: 12px">
                             List of team members
                         </div>
@@ -245,7 +254,8 @@ import { useTeamStore } from '@/store/team'
 import { useCourtStore } from '@/store/court'
 import TeamAdvanceSetting from '@/components/page/ramdomTeam/AdvanceSetting.vue'
 import router from '@/router'
-
+import { storeToRefs } from 'pinia'
+const roomName = ref('')
 const isActive = ref(false)
 function swipe(direction: string) {
     if (direction === 'Up') {
@@ -255,6 +265,7 @@ function swipe(direction: string) {
 const showAdvanceSetting = ref(false)
 const { setTeamLimit, addTeamMember, resetTeam } = useTeamStore()
 const { setCourtNumber, setWinScore, setWinStreak } = useCourtStore()
+const { teamMember } = storeToRefs(useTeamStore())
 const textTwoDay = ref('')
 const courtNumber = ref(
     isNaN(parseInt(localStorage.getItem('courtNumber') ?? ''))
@@ -396,7 +407,7 @@ function resetTextTeam() {
     winStreak.value = 2
     teamLimit.value = 2
 }
-function randomTeam() {
+async function randomTeam() {
     if (textTeam.value.trim() === '') {
         alert('ใส่ชื่อผู้เล่นด้วย')
         return
@@ -427,7 +438,25 @@ function randomTeam() {
     member.value.forEach((player) => {
         addTeamMember(player)
     })
-    router.push({ name: 'TeamListPage' })
+    const payload = {
+        roomName: roomName.value,
+        allTeam: teamMember.value,
+        teamLimit: teamLimit.value,
+        winScore: winScore.value,
+        winStreak: winStreak.value,
+        courtNumber: courtNumber.value,
+    }
+    const data = await fetch('https://bad-boy-service.vercel.app/room', {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload), // body data type must match "Content-Type" header
+    }).then((e) => e.json())
+    if (!data) return
+    console.log(data)
+
+    router.push({ name: 'TeamListPage', params: { roomId: data.id } })
 }
 </script>
 <style scoped lang="scss">

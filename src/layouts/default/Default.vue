@@ -14,6 +14,10 @@
                 <v-icon>mdi-home</v-icon>
                 Home
             </v-btn>
+            <v-btn @click="goPage('RoomListPage')">
+                <v-icon>mdi-list-box-outline</v-icon>
+                RoomList
+            </v-btn>
             <v-btn @click="goPage('TestPage')">
                 <v-icon>mdi-cog-outline</v-icon>
                 Test
@@ -30,9 +34,9 @@ import { pageStatePluginSymbol } from '@/plugins/pageState'
 import { inject } from 'vue'
 const pageState = inject(pageStatePluginSymbol)!
 function goPage(name: string) {
-    if (pageState.isCreateTeam.value) {
-        if (!confirm('ต้องการเปลี่ยนหน้าหรือไม่')) return
-    }
+    // if (pageState.isCreateTeam.value) {
+    //     if (!confirm('ต้องการเปลี่ยนหน้าหรือไม่')) return
+    // }
     pageState.resetCreateRoomTeam()
     router.push({ name: name })
 }
