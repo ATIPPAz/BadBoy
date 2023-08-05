@@ -44,7 +44,7 @@ export function $polling() {
             console.log('start polling')
             fn()
             // pullConnection()
-        }, 30000)
+        }, 1000)
     }
 
     return {
