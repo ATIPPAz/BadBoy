@@ -55,7 +55,7 @@
                     </v-btn>
 
                     <v-btn
-                        @click="textTwoDay = ''"
+                        @click="splitTeam"
                         class="bg-red"
                         rounded="xl"
                         :disabled="textTwoDay.length === 0"
@@ -68,7 +68,7 @@
                     <v-btn
                         @click="satCopy"
                         class="bg-purple-lighten-2"
-                        v-if="openCopyDay"
+                        v-if="openSat"
                         rounded="xl"
                     >
                         <v-icon> mdi-content-copy </v-icon>
@@ -79,7 +79,7 @@
                     <v-btn
                         @click="sunCopy"
                         class="bg-red-lighten-2"
-                        v-if="openCopyDay"
+                        v-if="openSun"
                         rounded="xl"
                     >
                         <v-icon> mdi-content-copy </v-icon>
@@ -255,6 +255,7 @@ import { useCourtStore } from '@/store/court'
 import TeamAdvanceSetting from '@/components/page/ramdomTeam/AdvanceSetting.vue'
 import router from '@/router'
 import { storeToRefs } from 'pinia'
+import { computed } from 'vue'
 const roomName = ref('')
 const isActive = ref(false)
 function swipe(direction: string) {
@@ -266,6 +267,9 @@ const showAdvanceSetting = ref(false)
 const { setTeamLimit, addTeamMember, resetTeam } = useTeamStore()
 const { setCourtNumber, setWinScore, setWinStreak } = useCourtStore()
 const { teamMember } = storeToRefs(useTeamStore())
+const openSat = computed(() => saturdayMember.value.length != 0)
+const openSun = computed(() => sundayMember.value.length != 0)
+
 const textTwoDay = ref('')
 const courtNumber = ref(
     isNaN(parseInt(localStorage.getItem('courtNumber') ?? ''))
@@ -301,12 +305,20 @@ watch(
 function getFormat() {
     navigator.clipboard.writeText(`ตีแบดวันเสาร์ xx.xx-xx.xx
 1.xxx
+2.xxxx
 --------
 
 ตีแบดวันอาทิตย์ xx.xx-xx.xx
 1.xxx
+2.xxxx
 `)
 }
+function splitTeam() {
+    saturdayMember.value = ''
+    textTwoDay.value = ''
+    sundayMember.value = ''
+}
+
 function tryToSplitDay() {
     saturdayMember.value = ''
     sundayMember.value = ''
@@ -316,13 +328,16 @@ function tryToSplitDay() {
         let sat: any = null
 
         if (textTwoDay.value.includes('วันอาทิตย์')) {
-            remain = textTwoDay.value.trim().split('วันอาทิตย์')[0]
+            remain = textTwoDay.value.trim().split('วันอาทิตย์')[
+                textTwoDay.value.includes('วันเสาร์') ? 0 : 1
+            ]
             sun = textTwoDay.value.trim().split('วันอาทิตย์')[1].split('\n')
         }
         if (textTwoDay.value.includes('วันเสาร์')) {
             sat = remain.trim().split('วันเสาร์')[1].split('\n')
         }
-        let satFinish = false
+        let satFinish = !textTwoDay.value.includes('วันเสาร์')
+
         let index = 0
         while (!satFinish) {
             if (sat && sat[index].trim() === '') {
@@ -330,7 +345,7 @@ function tryToSplitDay() {
                 const strSplit = index + '.'
                 saturdayMember.value +=
                     sat[index].trim().split(strSplit)[1] + '\n'
-            } else if (sat[index] && sat[index].includes(`/${index}[A-Z])/`)) {
+            } else if (sat[index] && sat[index].includes(`${index}`)) {
                 const strSplit = index + ''
                 saturdayMember.value +=
                     sat[index].trim().split(strSplit)[1] + '\n'
@@ -342,9 +357,8 @@ function tryToSplitDay() {
             }
             index++
         }
-        console.log(saturdayMember.value)
         index = 0
-        let sunFinish = false
+        let sunFinish = !textTwoDay.value.includes('วันอาทิตย์')
         while (!sunFinish) {
             if (sun && sun[index].trim() === '') {
             } else if (sun && sun[index] && sun[index].includes(`${index}.`)) {
@@ -363,7 +377,7 @@ function tryToSplitDay() {
             }
             index++
         }
-        console.log(sundayMember.value)
+
         openCopyDay.value = true
     } catch (e) {
         console.log(e)
