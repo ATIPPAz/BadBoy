@@ -1,39 +1,43 @@
 <template>
-    <div
-        class="h-100"
-        style="position: relative"
-        v-touch="{
-            left: () => swipe('Left'),
-            right: () => swipe('Right'),
-            up: () => swipe('Up'),
-            down: () => swipe('Down'),
-        }"
-    >
-        <v-btn
-            style="position: fixed; bottom: 80px; right: 16px; z-index: 300"
-            v-if="!isActive && !$vuetify.display.mobile"
-            @click="isActive = true"
+    <div>
+        <div
+            class="h-100"
+            style="position: relative"
+            v-touch="{
+                left: () => swipe('Left'),
+                right: () => swipe('Right'),
+                up: () => swipe('Up'),
+                down: () => swipe('Down'),
+            }"
         >
-            สร้างทีม
-        </v-btn>
-        <div class="content h-100" style="position: relative">
-            <div>
-                <div class="d-flex justify-space-between align-center mb-2">
-                    <div class="mb-1 text-gray-text" style="font-size: 18px">
-                        กรอกรายชื่อทีม
+            <v-btn
+                style="position: fixed; bottom: 80px; right: 16px; z-index: 300"
+                v-if="!isActive && !$vuetify.display.mobile"
+                @click="isActive = true"
+            >
+                สร้างทีม
+            </v-btn>
+            <div class="content h-100" style="position: relative">
+                <div>
+                    <div class="d-flex justify-space-between align-center mb-2">
+                        <div
+                            class="mb-1 text-gray-text"
+                            style="font-size: 18px"
+                        >
+                            กรอกรายชื่อทีม
+                        </div>
+                        <v-btn
+                            @click="getFormat"
+                            class="bg-indigo-lighten-2"
+                            rounded="xl"
+                        >
+                            <v-icon> mdi-content-copy </v-icon>
+                            รูปแบบ
+                        </v-btn>
                     </div>
-                    <v-btn
-                        @click="getFormat"
-                        class="bg-indigo-lighten-2"
-                        rounded="xl"
-                    >
-                        <v-icon> mdi-content-copy </v-icon>
-                        รูปแบบ
-                    </v-btn>
-                </div>
-                <v-textarea
-                    v-model="textTwoDay"
-                    placeholder="ตัวอย่างเช่น
+                    <v-textarea
+                        v-model="textTwoDay"
+                        placeholder="ตัวอย่างเช่น
 ตีแบดวันเสาร์ 16.40-19.00
 1.xxx
 2.xxx
@@ -42,52 +46,52 @@
 ตีแบดวันอาทิตย์ 18.30-20.30
 1.xxx
 2.xxx"
-                >
-                </v-textarea>
-                <div class="d-flex justify-space-between">
-                    <v-btn
-                        @click="tryToSplitDay"
-                        class="bg-primary"
-                        rounded="xl"
-                        :disabled="textTwoDay.length === 0"
                     >
-                        สร้างรายชื่อตามวัน
-                    </v-btn>
+                    </v-textarea>
+                    <div class="d-flex justify-space-between">
+                        <v-btn
+                            @click="tryToSplitDay"
+                            class="bg-primary"
+                            rounded="xl"
+                            :disabled="textTwoDay.length === 0"
+                        >
+                            สร้างรายชื่อตามวัน
+                        </v-btn>
 
-                    <v-btn
-                        @click="splitTeam"
-                        class="bg-red"
-                        rounded="xl"
-                        :disabled="textTwoDay.length === 0"
-                    >
-                        reset
-                    </v-btn>
-                </div>
-                <br />
-                <div class="mb-2">
-                    <v-btn
-                        @click="satCopy"
-                        class="bg-purple-lighten-2"
-                        v-if="openSat"
-                        rounded="xl"
-                    >
-                        <v-icon> mdi-content-copy </v-icon>
-                        รายชื่อวันเสาร์
-                    </v-btn>
-                </div>
-                <div>
-                    <v-btn
-                        @click="sunCopy"
-                        class="bg-red-lighten-2"
-                        v-if="openSun"
-                        rounded="xl"
-                    >
-                        <v-icon> mdi-content-copy </v-icon>
-                        รายชื่อวันอาทิตย์
-                    </v-btn>
-                </div>
+                        <v-btn
+                            @click="splitTeam"
+                            class="bg-red"
+                            rounded="xl"
+                            :disabled="textTwoDay.length === 0"
+                        >
+                            reset
+                        </v-btn>
+                    </div>
+                    <br />
+                    <div class="mb-2">
+                        <v-btn
+                            @click="satCopy"
+                            class="bg-purple-lighten-2"
+                            v-if="openSat"
+                            rounded="xl"
+                        >
+                            <v-icon> mdi-content-copy </v-icon>
+                            รายชื่อวันเสาร์
+                        </v-btn>
+                    </div>
+                    <div>
+                        <v-btn
+                            @click="sunCopy"
+                            class="bg-red-lighten-2"
+                            v-if="openSun"
+                            rounded="xl"
+                        >
+                            <v-icon> mdi-content-copy </v-icon>
+                            รายชื่อวันอาทิตย์
+                        </v-btn>
+                    </div>
 
-                <!-- <div
+                    <!-- <div
                     style="
                         position: absolute;
                         bottom: 0px;
@@ -120,133 +124,205 @@
                         </div>
                     </div>
                 </div> -->
+                </div>
             </div>
-        </div>
 
-        <div
-            class="d-flex justify-center align-center h-100 background"
-            v-if="$vuetify.display.mobile"
-        >
-            <div>
-                <div class="d-flex justify-center align-center">
-                    <img src="./../assets/swipe-up.svg" alt="swipe up" />
-                </div>
-                <div class="d-flex justify-center align-center swipe-word">
-                    swipe up to random
-                </div>
-            </div>
-        </div>
-    </div>
-    <v-dialog
-        persistent
-        v-model="isActive"
-        transition="dialog-bottom-transition"
-        :fullscreen="true"
-    >
-        <v-card class="w-100" style="border-radius: 10px 10px 0px 0px">
-            <template v-slot:title>
-                <div class="d-flex justify-space-between">
-                    <span>Random Badminton Team</span>
-                    <v-icon variant="text" @click="isActive = false">
-                        mdi-close
-                    </v-icon>
-                </div>
-                <div class="d-flex justify-center">
-                    <div>
-                        <v-divider
-                            :thickness="5"
-                            class="border-opacity-100 mt-3"
-                            color="primary"
-                            style="width: 150px; border-radius: 30px"
-                        ></v-divider>
+            <div
+                class="d-flex justify-center align-center h-100 background"
+                v-if="$vuetify.display.mobile"
+            >
+                <div>
+                    <div class="d-flex justify-center align-center">
+                        <img src="./../assets/swipe-up.svg" alt="swipe up" />
+                    </div>
+                    <div class="d-flex justify-center align-center swipe-word">
+                        swipe up to random
                     </div>
                 </div>
-            </template>
-            <v-container class="h-100 pa-6 ma-0">
-                <v-row no-gutters class="h-100">
-                    <v-col align-self="start" cols="12">
+            </div>
+        </div>
+        <v-dialog
+            persistent
+            v-model="isActive"
+            transition="dialog-bottom-transition"
+            :fullscreen="true"
+        >
+            {{ teamLockList }}
+            <v-card class="w-100" style="border-radius: 10px 10px 0px 0px">
+                <template v-slot:title>
+                    <div class="d-flex justify-space-between">
+                        <span>Random Badminton Team</span>
+                        <v-icon variant="text" @click="isActive = false">
+                            mdi-close
+                        </v-icon>
+                    </div>
+                    <div class="d-flex justify-center">
                         <div>
-                            <div style="color: #838383; margin-bottom: 12px">
-                                Room Name
+                            <v-divider
+                                :thickness="5"
+                                class="border-opacity-100 mt-3"
+                                color="primary"
+                                style="width: 150px; border-radius: 30px"
+                            ></v-divider>
+                        </div>
+                    </div>
+                </template>
+                <v-container class="h-100 pa-6 ma-0">
+                    <v-row no-gutters class="h-100">
+                        <v-col align-self="start" cols="12">
+                            <div>
+                                <div
+                                    style="color: #838383; margin-bottom: 12px"
+                                >
+                                    Room Name
+                                </div>
+                                <v-text-field
+                                    v-model="roomName"
+                                    placeholder="room name"
+                                ></v-text-field>
                             </div>
-                            <v-text-field
-                                v-model="roomName"
-                                placeholder="room name"
-                            ></v-text-field>
-                        </div>
-                        <div style="color: #838383; margin-bottom: 12px">
-                            List of team members
-                        </div>
+                            <div :class="{}">
+                                <div>
+                                    <div
+                                        style="
+                                            color: #838383;
+                                            margin-bottom: 12px;
+                                        "
+                                    >
+                                        List of team members
+                                    </div>
+                                    <textarea v-model="textTeam"></textarea>
+                                </div>
 
-                        <textarea v-model="textTeam"></textarea>
-                        <div class="d-flex justify-space-between my-2">
-                            <div
-                                style="font-size: 12px; color: #838383"
-                                class="d-flex align-center"
-                            >
-                                <div v-if="!showAdvanceSetting">
-                                    ตั้งค่าเพิ่มเติมที่ปุ่มข้างๆ
+                                <div>
+                                    <div
+                                        style="
+                                            color: #838383;
+                                            margin-bottom: 12px;
+                                        "
+                                    >
+                                        รายชื่อมือใหม่
+                                    </div>
+                                    <textarea v-model="newbiesUser"></textarea>
+                                </div>
+                                <div>
+                                    <div
+                                        style="
+                                            color: #838383;
+                                            margin-bottom: 12px;
+                                        "
+                                    >
+                                        ล็อคคู่
+                                    </div>
+                                    <div>
+                                        <div
+                                            v-for="(lock, indexl) in teamLocks"
+                                            :key="lock.teamId"
+                                        >
+                                            <v-row class="d-flex">
+                                                <v-col
+                                                    v-for="(
+                                                        i, index
+                                                    ) in teamLimit"
+                                                    :key="index"
+                                                >
+                                                    <v-text-field
+                                                        density="compact"
+                                                        type="text"
+                                                        v-model="
+                                                            lock.teamMember[
+                                                                index
+                                                            ]
+                                                        "
+                                                    />
+                                                </v-col>
+                                                <v-col>
+                                                    <v-btn
+                                                        @click="
+                                                            deleteLockTeam(
+                                                                indexl
+                                                            )
+                                                        "
+                                                        >ลบ</v-btn
+                                                    >
+                                                </v-col>
+                                            </v-row>
+                                        </div>
+                                        <v-btn @click="addLockTeam"
+                                            >เพิ่มทีม</v-btn
+                                        >
+                                    </div>
                                 </div>
                             </div>
-                            <div
-                                @click="
-                                    showAdvanceSetting = !showAdvanceSetting
-                                "
-                            >
-                                <span class="text-primary"
-                                    >Advance Settings</span
+                            <div class="d-flex justify-space-between my-2">
+                                <div
+                                    style="font-size: 12px; color: #838383"
+                                    class="d-flex align-center"
                                 >
-                                <span>
-                                    <v-icon
-                                        color="primary"
-                                        :style="{
-                                            transform: showAdvanceSetting
-                                                ? ''
-                                                : 'scaleY(-1)',
-                                        }"
+                                    <div v-if="!showAdvanceSetting">
+                                        ตั้งค่าเพิ่มเติมที่ปุ่มข้างๆ
+                                    </div>
+                                </div>
+                                <div
+                                    @click="
+                                        showAdvanceSetting = !showAdvanceSetting
+                                    "
+                                >
+                                    <span class="text-primary"
+                                        >Advance Settings</span
                                     >
-                                        mdi-chevron-up
-                                    </v-icon>
-                                </span>
+                                    <span>
+                                        <v-icon
+                                            color="primary"
+                                            :style="{
+                                                transform: showAdvanceSetting
+                                                    ? ''
+                                                    : 'scaleY(-1)',
+                                            }"
+                                        >
+                                            mdi-chevron-up
+                                        </v-icon>
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                        <div v-if="showAdvanceSetting">
-                            <TeamAdvanceSetting
-                                v-model:court-number="courtNumber"
-                                v-model:team-limit="teamLimit"
-                                v-model:win-streak="winStreak"
-                                @update:win-score="(e:number)=>{
+                            <div v-if="showAdvanceSetting">
+                                <TeamAdvanceSetting
+                                    v-model:court-number="courtNumber"
+                                    v-model:team-limit="teamLimit"
+                                    v-model:win-streak="winStreak"
+                                    @update:win-score="(e:number)=>{
                             winScore=e
                         }"
-                            />
-                        </div>
-                    </v-col>
-                    <v-col align-self="end" cols="12" class="">
-                        <div class="w-100"></div>
-                    </v-col>
-                </v-row>
-            </v-container>
-            <v-card-actions class="d-flex justify-end w-100 pa-4">
-                <div class="w-100">
-                    <v-btn
-                        class="w-100 bg-primary text-white mx-0 mb-2"
-                        rounded="xl"
-                        @click="randomTeam"
-                    >
-                        random
-                    </v-btn>
-                    <v-btn
-                        class="w-100 text-primary mx-0"
-                        style="background-color: #f1f2ff"
-                        rounded="xl"
-                        @click="resetTextTeam"
-                    >
-                        reset
-                    </v-btn>
-                </div>
-            </v-card-actions>
-        </v-card>
-    </v-dialog>
+                                ></TeamAdvanceSetting>
+                            </div>
+                        </v-col>
+                        <v-col align-self="end" cols="12" class="">
+                            <div class="w-100"></div>
+                        </v-col>
+                    </v-row>
+                </v-container>
+                <v-card-actions class="d-flex justify-end w-100 pa-4">
+                    <div class="w-100">
+                        <v-btn
+                            class="w-100 bg-primary text-white mx-0 mb-2"
+                            rounded="xl"
+                            @click="randomTeam"
+                        >
+                            random
+                        </v-btn>
+                        <v-btn
+                            class="w-100 text-primary mx-0"
+                            style="background-color: #f1f2ff"
+                            rounded="xl"
+                            @click="resetTextTeam"
+                        >
+                            reset
+                        </v-btn>
+                    </div>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+    </div>
 </template>
 <script setup lang="ts">
 import { ref, watch } from 'vue'
@@ -254,8 +330,10 @@ import { useTeamStore } from '@/store/team'
 import { useCourtStore } from '@/store/court'
 import TeamAdvanceSetting from '@/components/page/ramdomTeam/AdvanceSetting.vue'
 import router from '@/router'
+import type { TeamMember } from '@/store/team'
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
+import { InputType } from 'zlib'
 const roomName = ref('')
 const isActive = ref(false)
 function swipe(direction: string) {
@@ -263,13 +341,21 @@ function swipe(direction: string) {
         isActive.value = true
     }
 }
+const test = ref(['', ''])
 const showAdvanceSetting = ref(false)
-const { setTeamLimit, addTeamMember, resetTeam } = useTeamStore()
+const { setTeamLimit, addTeamMember, resetTeam, addNewTeam, setTeam } =
+    useTeamStore()
 const { setCourtNumber, setWinScore, setWinStreak } = useCourtStore()
-const { teamMember } = storeToRefs(useTeamStore())
+const { teamMember, teamState } = storeToRefs(useTeamStore())
+const newbiesUser = ref(localStorage.getItem('newbiesUser') ?? '')
 const openSat = computed(() => saturdayMember.value.length != 0)
 const openSun = computed(() => sundayMember.value.length != 0)
-
+interface TeamLock {
+    teamId: number
+    teamMember: string[]
+}
+const teamLockList = computed(() => teamLocks.value)
+const teamLocks = ref<TeamLock[]>([])
 const textTwoDay = ref('')
 const courtNumber = ref(
     isNaN(parseInt(localStorage.getItem('courtNumber') ?? ''))
@@ -292,7 +378,7 @@ const winScore = ref(
         : parseInt(localStorage.getItem('winScore')!)
 )
 const openCopyDay = ref(false)
-const textTeam = ref(localStorage.getItem('textTeam') ?? '')
+const textTeam = ref('')
 const member = ref<string[]>([])
 const saturdayMember = ref('')
 const sundayMember = ref('')
@@ -302,6 +388,19 @@ watch(
         openCopyDay.value = false
     }
 )
+function addLockTeam() {
+    const newTeamLock: TeamLock = {
+        teamId: teamLocks.value.length + 1,
+        teamMember: [],
+    }
+    for (let index = 0; index < teamLimit.value; index++) {
+        newTeamLock.teamMember.push('')
+    }
+    teamLocks.value.push(newTeamLock)
+}
+function deleteLockTeam(teamlockIndex: number) {
+    teamLocks.value.splice(teamlockIndex, 1)
+}
 function getFormat() {
     navigator.clipboard.writeText(`ตีแบดวันเสาร์ xx.xx-xx.xx
 1.xxx
@@ -402,12 +501,38 @@ function shufferMember(member: string[]) {
     }
     return member
 }
+function shufferTeam(team: TeamMember[]) {
+    const allTeam: string[][] = []
+    team.forEach((e) => {
+        allTeam.push(e.member)
+    })
+    console.log('suffer')
+    const result = allTeam.slice().sort(() => Math.random() - 0.5)
+    console.log(result)
+
+    return result
+}
+watch(
+    () => teamLimit.value,
+    (value) => {
+        const removeItem: TeamLock[] = []
+        teamLocks.value.forEach((e: TeamLock, index) => {
+            removeItem.push({
+                teamId: e.teamId,
+                teamMember: e.teamMember.slice(0, value),
+            })
+        })
+        teamLocks.value = removeItem
+    }
+)
 function resetTextTeam() {
     localStorage.removeItem('textTeam')
     localStorage.removeItem('courtNumber')
     localStorage.removeItem('winScore')
     localStorage.removeItem('winStreak')
     localStorage.removeItem('teamLimit')
+    localStorage.removeItem('newbiesUser')
+    newbiesUser.value = ''
     textTeam.value = ''
     courtNumber.value = 1
     winScore.value = 15
@@ -419,9 +544,21 @@ async function randomTeam() {
         alert('ใส่ชื่อผู้เล่นด้วย')
         return
     }
+    if (
+        teamLocks.value.some((e) => e.teamMember.some((x) => x.trim() === ''))
+    ) {
+        alert('ใส่ชื่อผู้เล่นทีมล็อคไม่ครบ')
+        return
+    }
     member.value = generateMember()
     const splitTeam = Math.ceil(member.value.length / teamLimit.value)
-    if (splitTeam < courtNumber.value * 2) {
+    if (
+        splitTeam +
+            (teamLocks.value
+                .map((subArray) => subArray.teamMember.length)
+                .reduce((total, current) => total + current, 0) ?? 0) <
+        courtNumber.value * 2
+    ) {
         alert(
             `ใส่จำนวนคนไม่พอ ขั้นต่ำ ${
                 courtNumber.value * 2 * teamLimit.value
@@ -441,10 +578,18 @@ async function randomTeam() {
     setTeamLimit(teamLimit.value)
     setWinScore(winScore.value)
     setWinStreak(winStreak.value)
+
     member.value = shufferMember(member.value)
     member.value.forEach((player) => {
         addTeamMember(player)
     })
+    teamLocks.value.forEach((e) => {
+        addNewTeam(e.teamMember)
+    })
+    const _team = teamState.value
+    const sufferTeam = shufferTeam(_team)
+    setTeam(sufferTeam)
+
     const payload = {
         roomName: roomName.value,
         allTeam: teamMember.value,

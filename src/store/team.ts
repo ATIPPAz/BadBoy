@@ -47,12 +47,29 @@ export const useTeamStore = defineStore('teamStore', () => {
         teamState.value[index].member.push(player)
     }
 
+    function addNewTeam(player: string[]) {
+        teamState.value.push({
+            member: player,
+            order: teamState.value.length + 1,
+        })
+    }
+
+    function setTeam(team: string[][]) {
+        team.forEach((e, teamIndex) => {
+            teamState.value[teamIndex].member = e
+            teamState.value[teamIndex].order = teamIndex
+        })
+    }
+
     return {
+        teamState,
         teamMember,
         setTeamLimit,
         addTeamMember,
         resetTeam,
         getRemainQueue,
         getTeamQueue,
+        setTeam,
+        addNewTeam
     }
 })
