@@ -423,28 +423,33 @@ function tryToSplitDay() {
         let sun: any = null
         let sat: any = null
 
-        if (textTwoDay.value.includes('วันอาทิตย์')) {
-            remain = textTwoDay.value.trim().split('วันอาทิตย์')[
-                textTwoDay.value.includes('วันเสาร์') ? 0 : 1
+        if (textTwoDay.value.includes('อาทิตย์')) {
+            remain = textTwoDay.value.trim().split('อาทิตย์')[
+                textTwoDay.value.includes('เสาร์') ? 0 : 1
             ]
-            sun = textTwoDay.value.trim().split('วันอาทิตย์')[1].split('\n')
+            sun = textTwoDay.value
+                .trim()
+                .split('อาทิตย์')[1]
+                .split('\n')
+                .slice(1)
         }
-        if (textTwoDay.value.includes('วันเสาร์')) {
-            sat = remain.trim().split('วันเสาร์')[1].split('\n')
+        if (textTwoDay.value.includes('เสาร์')) {
+            sat = remain.trim().split('เสาร์')[1].split('\n').slice(1)
         }
-        let satFinish = !textTwoDay.value.includes('วันเสาร์')
+        let satFinish = !textTwoDay.value.includes('เสาร์')
+        console.log(sat)
 
         let index = 0
         while (!satFinish) {
             if (sat && sat[index].trim() === '') {
-            } else if (sat[index] && sat[index].includes(`${index}.`)) {
-                const strSplit = index + '.'
+            } else if (sat[index] && sat[index].includes(`${index + 1}.`)) {
+                const strSplit = index + 1 + '.'
                 saturdayMember.value +=
-                    sat[index].trim().split(strSplit)[1] + '\n'
-            } else if (sat[index] && sat[index].includes(`${index}`)) {
-                const strSplit = index + ''
+                    sat[index].trim().split(strSplit)[1].trim() + '\n'
+            } else if (sat[index] && sat[index].includes(`${index + 1}`)) {
+                const strSplit = index + 1 + ''
                 saturdayMember.value +=
-                    sat[index].trim().split(strSplit)[1] + '\n'
+                    sat[index].trim().split(strSplit)[1].trim() + '\n'
             } else {
                 satFinish = true
             }
@@ -454,17 +459,25 @@ function tryToSplitDay() {
             index++
         }
         index = 0
-        let sunFinish = !textTwoDay.value.includes('วันอาทิตย์')
+        let sunFinish = !textTwoDay.value.includes('อาทิตย์')
         while (!sunFinish) {
             if (sun && sun[index].trim() === '') {
-            } else if (sun && sun[index] && sun[index].includes(`${index}.`)) {
-                const strSplit = index + '.'
+            } else if (
+                sun &&
+                sun[index] &&
+                sun[index].includes(`${index + 1}.`)
+            ) {
+                const strSplit = index + 1 + '.'
                 sundayMember.value +=
-                    sun[index].trim().split(strSplit)[1] + '\n'
-            } else if (sun && sun[index] && sun[index].includes(`${index}`)) {
-                const strSplit = index + ''
+                    sun[index].trim().split(strSplit)[1].trim() + '\n'
+            } else if (
+                sun &&
+                sun[index] &&
+                sun[index].includes(`${index + 1}`)
+            ) {
+                const strSplit = index + 1 + ''
                 sundayMember.value +=
-                    sun[index].trim().split(strSplit)[1] + '\n'
+                    sun[index].trim().split(strSplit)[1].trim() + '\n'
             } else {
                 sunFinish = true
             }
