@@ -147,8 +147,10 @@
             transition="dialog-bottom-transition"
             :fullscreen="true"
         >
-            {{ teamLockList }}
-            <v-card class="w-100" style="border-radius: 10px 10px 0px 0px">
+            <v-card
+                class="w-100 h-100"
+                style="border-radius: 10px 10px 0px 0px"
+            >
                 <template v-slot:title>
                     <div class="d-flex justify-space-between">
                         <span>Random Badminton Team</span>
@@ -167,7 +169,7 @@
                         </div>
                     </div>
                 </template>
-                <v-container class="h-100 pa-6 ma-0">
+                <v-container class="pa-6 ma-0">
                     <v-row no-gutters class="h-100">
                         <v-col align-self="start" cols="12">
                             <div>
@@ -192,18 +194,6 @@
                                         List of team members
                                     </div>
                                     <textarea v-model="textTeam"></textarea>
-                                </div>
-
-                                <div>
-                                    <div
-                                        style="
-                                            color: #838383;
-                                            margin-bottom: 12px;
-                                        "
-                                    >
-                                        รายชื่อมือใหม่
-                                    </div>
-                                    <textarea v-model="newbiesUser"></textarea>
                                 </div>
                                 <div>
                                     <div
@@ -238,6 +228,9 @@
                                                 </v-col>
                                                 <v-col>
                                                     <v-btn
+                                                        class="w-100 bg-error text-white"
+                                                        rounded="xl"
+                                                        variant="flat"
                                                         @click="
                                                             deleteLockTeam(
                                                                 indexl
@@ -248,9 +241,18 @@
                                                 </v-col>
                                             </v-row>
                                         </div>
-                                        <v-btn @click="addLockTeam"
-                                            >เพิ่มทีม</v-btn
-                                        >
+                                        <div class="d-flex justify-end">
+                                            <v-btn
+                                                variant="flat"
+                                                @click="addLockTeam"
+                                                class="w-100 text-primary"
+                                                style="
+                                                    background-color: #f1f2ff;
+                                                "
+                                                rounded="xl"
+                                                >เพิ่มทีม</v-btn
+                                            >
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -296,12 +298,9 @@
                                 ></TeamAdvanceSetting>
                             </div>
                         </v-col>
-                        <v-col align-self="end" cols="12" class="">
-                            <div class="w-100"></div>
-                        </v-col>
                     </v-row>
                 </v-container>
-                <v-card-actions class="d-flex justify-end w-100 pa-4">
+                <v-card-actions class="mt-auto d-flex justify-end w-100 pa-4">
                     <div class="w-100">
                         <v-btn
                             class="w-100 bg-primary text-white mx-0 mb-2"
@@ -341,13 +340,11 @@ function swipe(direction: string) {
         isActive.value = true
     }
 }
-const test = ref(['', ''])
 const showAdvanceSetting = ref(false)
 const { setTeamLimit, addTeamMember, resetTeam, addNewTeam, setTeam } =
     useTeamStore()
 const { setCourtNumber, setWinScore, setWinStreak } = useCourtStore()
 const { teamMember, teamState } = storeToRefs(useTeamStore())
-const newbiesUser = ref(localStorage.getItem('newbiesUser') ?? '')
 const openSat = computed(() => saturdayMember.value.length != 0)
 const openSun = computed(() => sundayMember.value.length != 0)
 interface TeamLock {
@@ -532,7 +529,6 @@ function resetTextTeam() {
     localStorage.removeItem('winStreak')
     localStorage.removeItem('teamLimit')
     localStorage.removeItem('newbiesUser')
-    newbiesUser.value = ''
     textTeam.value = ''
     courtNumber.value = 1
     winScore.value = 15

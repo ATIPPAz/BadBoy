@@ -1,29 +1,6 @@
 <template>
     <div>
         <div class="mt-2">
-            <!-- <br /> -->
-            <!-- <div class="d-flex justify-space-between bg-green">
-                <div
-                    class="rounded-s-lg d-flex align-center justify-center"
-                    style="width: 40px"
-                >
-                    <v-icon
-                        @click="emits('update:teamLimit', props.teamLimit + 1)"
-                    >
-                        mdi-chevron-down
-                    </v-icon>
-                </div>
-                <input type="number" value="1" readonly style="height: 35px" />
-                <div>
-                    <v-icon
-                        @click="emits('update:teamLimit', props.teamLimit + 1)"
-                    >
-                        mdi-chevron-up
-                    </v-icon>
-                </div>
-            </div>
-
-            <br /> -->
             <span class="text-gray-text">จำนวนคนในทีม</span>
             <v-text-field density="compact" :value="props.teamLimit" readonly>
                 <template v-slot:append-inner>
