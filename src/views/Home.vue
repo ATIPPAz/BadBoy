@@ -375,7 +375,7 @@ const winScore = ref(
         : parseInt(localStorage.getItem('winScore')!)
 )
 const openCopyDay = ref(false)
-const textTeam = ref('')
+const textTeam = ref(localStorage.getItem('textTeam') ?? '')
 const member = ref<string[]>([])
 const saturdayMember = ref('')
 const sundayMember = ref('')
