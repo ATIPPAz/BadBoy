@@ -1,7 +1,7 @@
 {
     "name": "ชื่อแอป",
     "short_name": "ชื่อย่อ",
-    "start_url": "/",
+    "start_url": "/index.html",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#000000",
