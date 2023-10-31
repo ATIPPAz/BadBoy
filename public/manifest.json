@@ -1,0 +1,16 @@
+{
+    "name": "ชื่อแอป",
+    "short_name": "ชื่อย่อ",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#000000",
+    "description": "คำอธิบายแอป",
+    "icons": [
+        {
+            "src": "./icon.ico",
+            "sizes": "192x192",
+            "type": "image/x-icon"
+        }
+    ]
+}
